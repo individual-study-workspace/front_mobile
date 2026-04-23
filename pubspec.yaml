@@ -37,6 +37,7 @@ dependencies:
   dio: ^5.9.2
   flutter_riverpod: 2.5.1
   riverpod_annotation: 2.3.5
+  flutter_svg: ^2.2.3
 
 dev_dependencies:
   flutter_test:
@@ -63,9 +64,79 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/icons/archive_filled.svg
+    - assets/icons/archive_outline.svg
+    - assets/icons/book_filled.svg
+    - assets/icons/book_outline.svg
+    - assets/icons/calendar_outline.svg
+    - assets/icons/camera_filled.svg
+    - assets/icons/camera_outline.svg
+    - assets/icons/certified_filled.svg
+    - assets/icons/certified_outline.svg
+    - assets/icons/chat_filled.svg
+    - assets/icons/chat_outline.svg
+    - assets/icons/class_filled.svg
+    - assets/icons/class_outline.svg
+    - assets/icons/close_outline.svg
+    - assets/icons/copy_filled.svg
+    - assets/icons/copy_outline.svg
+    - assets/icons/credit_card_filled.svg
+    - assets/icons/credit_card_outline.svg
+    - assets/icons/download_outline.svg
+    - assets/icons/down_outline.svg
+    - assets/icons/edit_filled.svg
+    - assets/icons/edit_off,_outline.svg
+    - assets/icons/edit_outline.svg
+    - assets/icons/eye_off_outline.svg
+    - assets/icons/eye_on_outline.svg
+    - assets/icons/file_download_filled.svg
+    - assets/icons/file_download_outline.svg
+    - assets/icons/file_zip_outline.svg
+    - assets/icons/folder_filled.svg
+    - assets/icons/folder_outline.svg
+    - assets/icons/home_filled.svg
+    - assets/icons/home_outline.svg
+    - assets/icons/info_filled.svg
+    - assets/icons/info_outline.svg
+    - assets/icons/left_outline.svg
+    - assets/icons/logout_outline.svg
+    - assets/icons/map_pin_filled.svg
+    - assets/icons/map_pin_outline.svg
+    - assets/icons/message_filled.svg
+    - assets/icons/message_outline.svg
+    - assets/icons/more_filled.svg
+    - assets/icons/notification_filled.svg
+    - assets/icons/notification_outline.svg
+    - assets/icons/paperclip_outline.svg
+    - assets/icons/pencil_filled.svg
+    - assets/icons/pencil_outline.svg
+    - assets/icons/pin_filled.svg
+    - assets/icons/pin_outline.svg
+    - assets/icons/plus_outline.svg
+    - assets/icons/right_outline.svg
+    - assets/icons/search_filled.svg
+    - assets/icons/search_outline.svg
+    - assets/icons/send_filled.svg
+    - assets/icons/send_outline.svg
+    - assets/icons/setting_filled.svg
+    - assets/icons/setting_outline.svg
+    - assets/icons/share1_outline.svg
+    - assets/icons/share2_outline.svg
+    - assets/icons/success_filled.svg
+    - assets/icons/success_outline.svg
+    - assets/icons/tab_bar_profile.svg
+    - assets/icons/time_filled.svg
+    - assets/icons/time_outline.svg
+    - assets/icons/up_outline.svg
+    - assets/icons/user_filled.svg
+    - assets/icons/user_outline.svg
+    - assets/icons/video_filled.svg
+    - assets/icons/video_outline.svg
+    - assets/icons/warning_filled.svg
+    - assets/icons/warning_outline.svg
+    - assets/icons/xbox_filled.svg
+    - assets/icons/xbox_outline.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
