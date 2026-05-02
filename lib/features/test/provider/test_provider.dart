@@ -13,3 +13,5 @@ final testControllerProvider =
     StateNotifierProvider<TestController, AsyncValue>(
       (ref) => TestController(ref.read(testRepositoryProvider)),
     );
+
+final toggleProvider = StateProvider<bool>((ref) => true);

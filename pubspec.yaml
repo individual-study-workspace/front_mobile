@@ -83,6 +83,12 @@ flutter:
     - assets/icons/copy_outline.svg
     - assets/icons/credit_card_filled.svg
     - assets/icons/credit_card_outline.svg
+    - assets/icons/default_disable_toggle_false.svg
+    - assets/icons/default_disable_toggle_true.svg
+    - assets/icons/default_enable_toggle_false.svg
+    - assets/icons/default_enable_toggle_true.svg
+    - assets/icons/default_read_only_toggle_false.svg
+    - assets/icons/default_read_only_toggle_true.svg
     - assets/icons/download_outline.svg
     - assets/icons/down_outline.svg
     - assets/icons/edit_filled.svg
@@ -123,6 +129,12 @@ flutter:
     - assets/icons/setting_outline.svg
     - assets/icons/share1_outline.svg
     - assets/icons/share2_outline.svg
+    - assets/icons/small_disable_toggle_false.svg
+    - assets/icons/small_disable_toggle_true.svg
+    - assets/icons/small_enable_toggle_false.svg
+    - assets/icons/small_enable_toggle_true.svg
+    - assets/icons/small_read_only_toggle_false.svg
+    - assets/icons/small_read_only_toggle_true.svg
     - assets/icons/success_filled.svg
     - assets/icons/success_outline.svg
     - assets/icons/tab_bar_profile.svg
