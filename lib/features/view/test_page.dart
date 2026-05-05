@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../common/widget/segment_control.dart';
 import '../test/provider/test_provider.dart';
 
 class TestPage extends ConsumerWidget {
@@ -9,12 +10,23 @@ class TestPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(testControllerProvider);
+    final segment = ref.watch(segmentProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text("Quiz Test")),
       body: Column(
         children: [
           //여기에 만든 위젯
+          SizedBox(
+            width: double.infinity,
+            child: SegmentedControl(
+              items: ['Label', 'Label'],
+              selectedIndex: segment,
+              onChanged: (index) {
+                ref.read(segmentProvider.notifier).state = index;
+              },
+            ),
+          ),
           Expanded(
             child: state.when(
               loading: () => const Center(child: CircularProgressIndicator()),

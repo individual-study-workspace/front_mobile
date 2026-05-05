@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../core/api/api_client.dart';
 import '../controller/test_controller.dart';
 import '../repository/test_repository.dart';
@@ -15,3 +16,5 @@ final testControllerProvider =
     );
 
 final toggleProvider = StateProvider<bool>((ref) => true);
+
+final segmentProvider = StateProvider<int>((ref) => 0);

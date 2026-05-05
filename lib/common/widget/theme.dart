@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 class Palette {
   static const Color bgBase = Color(0xFFF4F5F6);
+  static const Color bgSoft = Color(0xFFE6E8EA);
+  static const Color bgSurface = Color(0xFFFFFFFF);
 
   static const Color textPrimary = Color(0xFF1E2124);
   static const Color textSecondary = Color(0xFF58616A);
