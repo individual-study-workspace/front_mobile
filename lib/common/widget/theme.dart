@@ -5,6 +5,9 @@ class Palette {
   static const Color bgSoft = Color(0xFFE6E8EA);
   static const Color bgSurface = Color(0xFFFFFFFF);
 
+  static const Color statusDanger = Color(0xFFEF4444);
+  static const Color statusDangerBg = Color(0xFFFEF2F2);
+
   static const Color textPrimary = Color(0xFF1E2124);
   static const Color textSecondary = Color(0xFF58616A);
   static const Color textTertiary = Color(0xFF8A949E);
@@ -43,4 +46,26 @@ class Palette {
   static const Color gray10 = Color(0xFFE6E8EA);
   static const Color gray5 = Color(0xFFF4F5F6);
   static const Color gray0 = Color(0xFFFFFFFF);
+
+  static const Color blue900 = Color(0xFF193071);
+  static const Color blue800 = Color(0xFF1A3898);
+  static const Color blue700 = Color(0xFF1B49CA);
+  static const Color blue600 = Color(0xFF1F5FEA);
+  static const Color blue500 = Color(0xFF3B82F6);
+  static const Color blue400 = Color(0xFF60A5FA);
+  static const Color blue300 = Color(0xFF93C5FD);
+  static const Color blue200 = Color(0xFFBFDBFE);
+  static const Color blue100 = Color(0xFFDBEAFE);
+  static const Color blue50 = Color(0xFFEFF6FF);
+
+  static const Color red900 = Color(0xFF701A1A);
+  static const Color red800 = Color(0xFF8F1919);
+  static const Color red700 = Color(0xFFB61B1B);
+  static const Color red600 = Color(0xFFDC2626);
+  static const Color red500 = Color(0xFFEF4444);
+  static const Color red400 = Color(0xFFF87171);
+  static const Color red300 = Color(0xFFFCA5A5);
+  static const Color red200 = Color(0xFFFECACA);
+  static const Color red100 = Color(0xFFFEE2E2);
+  static const Color red50 = Color(0xFFFEF2F2);
 }
