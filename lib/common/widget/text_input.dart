@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:front_mobile/common/widget/theme.dart';
+import 'package:front_mobile/common/theme.dart';
 
 enum LargeInputState { normal, focused, error, disabled, readOnly }
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:front_mobile/common/widget/theme.dart';
+import 'package:front_mobile/common/theme.dart';
 
 enum LargeCheckBoxState { defaultState, checked, disabled }
 
