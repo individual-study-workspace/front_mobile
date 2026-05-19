@@ -98,3 +98,135 @@ class Palette {
   static const Color yellow100 = Color(0xFFFEF3C7);
   static const Color yellow50 = Color(0xFFFFFBEB);
 }
+
+class TextTypes {
+  static TextStyle h1({Color color = Palette.textPrimary}) {
+    return TextStyle(
+      fontSize: 34,
+      fontWeight: FontWeight.bold,
+      height: 1.4,
+      letterSpacing: -0.85,
+      color: color,
+    );
+  }
+
+  static TextStyle h2({Color color = Palette.textPrimary}) {
+    return TextStyle(
+      fontSize: 28,
+      fontWeight: FontWeight.bold,
+      height: 1.4,
+      letterSpacing: -0.56,
+      color: color,
+    );
+  }
+
+  static TextStyle h3({Color color = Palette.textPrimary}) {
+    return TextStyle(
+      fontSize: 24,
+      fontWeight: FontWeight.bold,
+      height: 1.4,
+      letterSpacing: -0.36,
+      color: color,
+    );
+  }
+
+  static TextStyle title1({Color color = Palette.textPrimary}) {
+    return TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+      height: 1.4,
+      letterSpacing: -0.2,
+      color: color,
+    );
+  }
+
+  static TextStyle title2({Color color = Palette.textPrimary}) {
+    return TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.bold,
+      height: 1.4,
+      letterSpacing: -0.18,
+      color: color,
+    );
+  }
+
+  static TextStyle title3({Color color = Palette.textPrimary}) {
+    return TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w600,
+      height: 1.5,
+      letterSpacing: -0.08,
+      color: color,
+    );
+  }
+
+  static TextStyle title4({Color color = Palette.textPrimary}) {
+    return TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w600,
+      height: 1.5,
+      letterSpacing: -0.07,
+      color: color,
+    );
+  }
+
+  static TextStyle body1M({Color color = Palette.textPrimary}) {
+    return TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+      height: 1.6,
+      letterSpacing: 0,
+      color: color,
+    );
+  }
+
+  static TextStyle body1R({Color color = Palette.textPrimary}) {
+    return TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+      height: 1.6,
+      letterSpacing: 0,
+      color: color,
+    );
+  }
+
+  static TextStyle body2M({Color color = Palette.textPrimary}) {
+    return TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w500,
+      height: 1.6,
+      letterSpacing: 0,
+      color: color,
+    );
+  }
+
+  static TextStyle body2R({Color color = Palette.textPrimary}) {
+    return TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w400,
+      height: 1.6,
+      letterSpacing: 0,
+      color: color,
+    );
+  }
+
+  static TextStyle caption1({Color color = Palette.textPrimary}) {
+    return TextStyle(
+      fontSize: 12,
+      fontWeight: FontWeight.w500,
+      height: 1.4,
+      letterSpacing: 0,
+      color: color,
+    );
+  }
+
+  static TextStyle caption2({Color color = Palette.textPrimary}) {
+    return TextStyle(
+      fontSize: 10,
+      fontWeight: FontWeight.w500,
+      height: 1.4,
+      letterSpacing: 0,
+      color: color,
+    );
+  }
+}
