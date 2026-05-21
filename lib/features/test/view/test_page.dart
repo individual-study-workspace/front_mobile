@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../common/widget/modal.dart';
-import '../test/provider/test_provider.dart';
+import '../../../common/widget/modal.dart';
+import '../provider/test_provider.dart';
 
 class TestPage extends ConsumerWidget {
   const TestPage({super.key});
