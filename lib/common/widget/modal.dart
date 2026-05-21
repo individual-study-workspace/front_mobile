@@ -56,9 +56,7 @@ class Modal extends StatelessWidget {
               Text(
                 description!,
                 textAlign: TextAlign.center,
-                style: content != null
-                    ? TextTypes.body1M(color: Palette.textSecondary)
-                    : TextTypes.body2M(color: Palette.textSecondary),
+                style: TextTypes.body2M(color: Palette.textSecondary),
               ),
             ],
 
