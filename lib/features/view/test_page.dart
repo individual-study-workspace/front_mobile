@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../common/widget/common_bottom_sheet.dart';
+import '../../common/widget/modal.dart';
 import '../test/provider/test_provider.dart';
 
 class TestPage extends ConsumerWidget {
@@ -18,43 +18,35 @@ class TestPage extends ConsumerWidget {
           //여기에 만든 위젯
           ElevatedButton(
             onPressed: () {
-              CommonBottomSheet.show(
-                context,
+              showDialog(
+                context: context,
+                builder: (_) {
+                  return Modal(
+                    title: '로그아웃 하시겠습니까?',
+                    description: '현재 계정에서 로그아웃됩니다.',
+                    leftText: '취소',
+                    rightText: '로그아웃',
+                    onLeft: () {
+                      Navigator.pop(context);
+                    },
+                    onRight: () {
+                      Navigator.pop(context);
 
-                title: '타이틀',
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(const SnackBar(content: Text('로그아웃 완료')));
+                    },
 
-                /// 위 가변 영역
-                topContent: const Text('추가 영역 1'),
-
-                /// 아래 가변 영역
-                bottomContent: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            height: 52,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade100,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: const Text('추가 영역 2'),
-                          ),
-                        ),
-                      ],
+                    /// 필요하면 content 추가
+                    content: const Text(
+                      '추가 컨텐츠 영역',
+                      textAlign: TextAlign.center,
                     ),
-                  ],
-                ),
-
-                /// 공통 버튼
-                buttonText: '버튼',
-                onButtonTap: () {
-                  Navigator.pop(context);
+                  );
                 },
               );
             },
-            child: const Text('바텀시트 열기'),
+            child: const Text('모달 열기'),
           ),
           Expanded(
             child: state.when(
