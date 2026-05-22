@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:front_mobile/common/widget/main_app_bar.dart';
 
 import '../../../common/widget/modal.dart';
 import '../provider/test_provider.dart';
@@ -12,9 +13,10 @@ class TestPage extends ConsumerWidget {
     final state = ref.watch(testControllerProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Quiz Test")),
+      // appBar: SubAppBar(title: 'Test',),
       body: Column(
         children: [
+          MainAppBar(title: '채팅'),
           //여기에 만든 위젯
           ElevatedButton(
             onPressed: () {
