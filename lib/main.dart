@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:front_mobile/common/theme.dart';
 
 import 'package:front_mobile/features/test/view/home_page.dart';
 
@@ -12,6 +13,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: HomePage());
+    return MaterialApp(
+      theme: ThemeData(scaffoldBackgroundColor: Palette.bgSurface),
+      home: const HomePage(),
+    );
   }
 }

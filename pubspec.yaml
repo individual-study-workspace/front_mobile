@@ -120,6 +120,8 @@ flutter:
     - assets/icons/pin_filled.svg
     - assets/icons/pin_outline.svg
     - assets/icons/plus_outline.svg
+    - assets/icons/profile_filled.svg
+    - assets/icons/profile_outline.svg
     - assets/icons/right_outline.svg
     - assets/icons/search_filled.svg
     - assets/icons/search_outline.svg

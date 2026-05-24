@@ -15,7 +15,6 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
   final Map<int, List<ScheduleType>> scheduleMap = {
     6: [ScheduleType.classType, ScheduleType.assignment],
     13: [ScheduleType.assignment],
-    15: [ScheduleType.more],
     18: [ScheduleType.todo],
   };
 
@@ -23,7 +22,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding: const EdgeInsets.fromLTRB(24, 16, 24, 12),
+      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -51,11 +50,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
         const SizedBox(width: 12),
         Text(
           '${currentMonth.year}년 ${currentMonth.month}월',
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-            color: Color(0xFF202124),
-          ),
+          style: TextTypes.title2(),
         ),
         const SizedBox(width: 12),
         _arrowButton(Icons.chevron_right, () {
@@ -82,19 +77,12 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
       children: List.generate(7, (index) {
         Color color = const Color(0xFFC5C9D0);
 
-        if (index == 0) color = const Color(0xFFFF3B3B);
-        if (index == 6) color = const Color(0xFF653DFF);
+        if (index == 0) color = Palette.red600;
+        if (index == 6) color = Palette.blue600;
 
         return Expanded(
           child: Center(
-            child: Text(
-              weeks[index],
-              style: TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w700,
-                color: color,
-              ),
-            ),
+            child: Text(weeks[index], style: TextTypes.caption1(color: color)),
           ),
         );
       }),
@@ -136,7 +124,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
     }
 
     if (date.weekday == DateTime.saturday) {
-      textColor = Palette.primary;
+      textColor = Palette.blue600;
     }
 
     return GestureDetector(
@@ -146,33 +134,32 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
         });
       },
       child: SizedBox(
-        height: 47,
+        height: 46,
         child: Column(
           children: [
             Container(
               width: 40,
               height: 40,
               alignment: Alignment.center,
-              child: Container(
-                width: 40,
-                height: 40,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: isSelected ? Palette.primary : Colors.transparent,
-                ),
-                child: Text(
-                  '${date.day}',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w400,
-                    color: isSelected ? Colors.white : textColor,
-                  ),
-                ),
+              padding: const EdgeInsets.symmetric(vertical: 6),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: isSelected ? Palette.primary : Colors.transparent,
+              ),
+              child: Text(
+                '${date.day}',
+                style: isSelected
+                    ? TextTypes.title1(color: Palette.textPrimaryInverse)
+                    : TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w400,
+                        height: 1,
+                        letterSpacing: -1,
+                        color: textColor,
+                      ),
               ),
             ),
-            const SizedBox(height: 4),
-            _buildScheduleDots(schedules),
+            SizedBox(height: 6, child: _buildScheduleDots(schedules)),
           ],
         ),
       ),
@@ -187,30 +174,10 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: schedules.take(3).map((type) {
-        if (type == ScheduleType.more) {
-          return Container(
-            width: 20,
-            height: 20,
-            alignment: Alignment.center,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: Palette.violet400,
-            ),
-            child: const Text(
-              '+3',
-              style: TextStyle(
-                fontSize: 10,
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          );
-        }
-
         return Container(
           margin: const EdgeInsets.symmetric(horizontal: 2),
-          width: 11,
-          height: 11,
+          width: 4,
+          height: 4,
           decoration: BoxDecoration(shape: BoxShape.circle, color: type.color),
         );
       }).toList(),
@@ -218,18 +185,24 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
   }
 
   Widget _buildLegend() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        _legendItem(Palette.violet400, '수업'),
-        const SizedBox(width: 12),
-        _legendItem(const Color(0xFF35C995), '과제/제출'), // green 컬러 추가 후 변경 필요
-        const SizedBox(width: 12),
-        _legendItem(
-          const Color(0xFFF5B82E),
-          'TO DO LIST',
-        ), // yellow 컬러 추가 후 변경 필요
-      ],
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      decoration: BoxDecoration(
+        color: Palette.bgBase,
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _legendItem(Palette.violet400, '수업'),
+          const SizedBox(width: 12),
+          _legendItem(Palette.green400, '과제/제출'),
+          const SizedBox(width: 12),
+          _legendItem(Palette.yellow400, 'TO DO LIST'),
+        ],
+      ),
     );
   }
 
@@ -242,14 +215,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
           decoration: BoxDecoration(shape: BoxShape.circle, color: color),
         ),
         const SizedBox(width: 5),
-        Text(
-          text,
-          style: const TextStyle(
-            fontSize: 12,
-            color: Color(0xFF7E828A),
-            fontWeight: FontWeight.w500,
-          ),
-        ),
+        Text(text, style: TextTypes.caption1(color: Color(0xFF757575))),
       ],
     );
   }
@@ -281,19 +247,17 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
   }
 }
 
-enum ScheduleType { classType, assignment, todo, more }
+enum ScheduleType { classType, assignment, todo }
 
 extension ScheduleTypeColor on ScheduleType {
   Color get color {
     switch (this) {
       case ScheduleType.classType:
-        return const Color(0xFF6948FF);
+        return Palette.primary;
       case ScheduleType.assignment:
-        return const Color(0xFF35C995);
+        return Palette.green400;
       case ScheduleType.todo:
-        return const Color(0xFFF5B82E);
-      case ScheduleType.more:
-        return const Color(0xFF8A63FF);
+        return Palette.yellow400;
     }
   }
 }
