@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:front_mobile/features/classroom/tutor/create/view/classroom_create_page.dart';
+import 'package:front_mobile/common/theme.dart';
 
-import 'common/theme.dart';
+import 'package:front_mobile/features/test/view/home_page.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -14,8 +14,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: AppTheme.lightTheme,
-      home: const ClassroomCreatePage(),
+      theme: ThemeData(scaffoldBackgroundColor: Palette.bgSurface),
+      home: const HomePage(),
     );
   }
 }
