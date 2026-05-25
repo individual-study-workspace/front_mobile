@@ -17,9 +17,14 @@ class Palette {
   static const Color textPrimary = Color(0xFF1E2124);
   static const Color textSecondary = Color(0xFF58616A);
   static const Color textTertiary = Color(0xFF8A949E);
-
   static const Color textDisabled = Color(0xFFCDD1D5);
   static const Color textPrimaryInverse = Color(0xFFFFFFFF);
+
+  static const Color iconPrimary = Color(0xFF1E2124);
+  static const Color iconSecondary = Color(0xFF58616A);
+  static const Color iconTertiary = Color(0xFF8A949E);
+  static const Color iconDisabled = Color(0xFFCDD1D5);
+  static const Color iconPrimaryInverse = Color(0xFFFFFFFF);
 
   static const Color borderDefault = Color(0xFFCDD1D5);
   static const Color borderLight = Color(0xFFE6E8EA);
