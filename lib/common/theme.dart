@@ -1,5 +1,18 @@
 import 'package:flutter/material.dart';
 
+class AppTheme {
+  static ThemeData get lightTheme {
+    return ThemeData(
+      scaffoldBackgroundColor: Colors.white,
+
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Colors.white,
+        elevation: 0,
+      ),
+    );
+  }
+}
+
 class Palette {
   static const Color bgBase = Color(0xFFF4F5F6);
   static const Color bgSoft = Color(0xFFE6E8EA);

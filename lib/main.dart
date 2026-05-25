@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'common/theme.dart';
 import 'features/test/view/test_page.dart';
 
 void main() {
@@ -12,6 +13,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: TestPage());
+    return MaterialApp(theme: AppTheme.lightTheme, home: const TestPage());
   }
 }
