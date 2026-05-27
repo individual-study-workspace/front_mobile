@@ -144,14 +144,15 @@ class LargeSearchInputField extends StatelessWidget {
                 ),
               ),
 
-              GestureDetector(
-                onTap: _isDisabled ? null : onClear,
-                child: SvgPicture.asset(
-                  'assets/icons/xbox_filled.svg',
-                  width: 24,
-                  height: 24,
+              if ((controller?.text.isNotEmpty ?? false))
+                GestureDetector(
+                  onTap: _isDisabled ? null : onClear,
+                  child: SvgPicture.asset(
+                    'assets/icons/xbox_filled.svg',
+                    width: 24,
+                    height: 24,
+                  ),
                 ),
-              ),
             ],
           ),
         ),
