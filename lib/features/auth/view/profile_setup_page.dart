@@ -55,7 +55,7 @@ class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> {
 
                   children: [
                     /// 타이틀
-                    Text('프로필을 설정해주세요', style: TextTypes.title1()),
+                    Text('프로필을 설정해주세요', style: TextTypes.title1B()),
                     const SizedBox(height: 4),
                     Text(
                       '서비스에서 사용할 이름과 역할을 선택해주세요.',
@@ -117,7 +117,7 @@ class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> {
 
                                   Text(
                                     '앨범에서 선택',
-                                    style: TextTypes.title4(
+                                    style: TextTypes.title4M(
                                       color: Palette.textTertiary,
                                     ),
                                   ),
@@ -135,11 +135,11 @@ class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> {
                     Text.rich(
                       TextSpan(
                         text: '이름 ',
-                        style: TextTypes.title4(color: Palette.gray60),
+                        style: TextTypes.title4M(color: Palette.gray60),
                         children: [
                           TextSpan(
                             text: '*',
-                            style: TextTypes.title4(
+                            style: TextTypes.title4M(
                               color: Palette.statusDanger,
                             ),
                           ),
@@ -160,7 +160,10 @@ class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> {
                     const SizedBox(height: 20),
 
                     /// 이메일
-                    Text('이메일', style: TextTypes.title4(color: Palette.gray60)),
+                    Text(
+                      '이메일',
+                      style: TextTypes.title4M(color: Palette.gray60),
+                    ),
 
                     const SizedBox(height: 8),
 
@@ -175,11 +178,11 @@ class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> {
                     Text.rich(
                       TextSpan(
                         text: '사용자 유형 선택 ',
-                        style: TextTypes.title4(color: Palette.gray60),
+                        style: TextTypes.title4M(color: Palette.gray60),
                         children: [
                           TextSpan(
                             text: '*',
-                            style: TextTypes.title4(
+                            style: TextTypes.title4M(
                               color: Palette.statusDanger,
                             ),
                           ),
@@ -286,7 +289,7 @@ class _RoleButton extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
 
           children: [
-            Text(title, style: TextTypes.title3(color: Palette.textPrimary)),
+            Text(title, style: TextTypes.title3SB(color: Palette.textPrimary)),
 
             const SizedBox(height: 4),
 

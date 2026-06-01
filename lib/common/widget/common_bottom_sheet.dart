@@ -77,7 +77,7 @@ class CommonBottomSheet extends StatelessWidget {
             const SizedBox(height: 24),
 
             /// 타이틀
-            Text(title, style: TextTypes.title1()),
+            Text(title, style: TextTypes.title1B()),
             const SizedBox(height: 20),
 
             /// 가변 영역 1
