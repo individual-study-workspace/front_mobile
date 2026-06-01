@@ -148,7 +148,7 @@ class TextTypes {
     );
   }
 
-  static TextStyle title1({Color color = Palette.textPrimary}) {
+  static TextStyle title1B({Color color = Palette.textPrimary}) {
     return TextStyle(
       fontSize: 20,
       fontWeight: FontWeight.bold,
@@ -158,7 +158,27 @@ class TextTypes {
     );
   }
 
-  static TextStyle title2({Color color = Palette.textPrimary}) {
+  static TextStyle title1SB({Color color = Palette.textPrimary}) {
+    return TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.w600,
+      height: 1.4,
+      letterSpacing: -0.2,
+      color: color,
+    );
+  }
+
+  static TextStyle title1M({Color color = Palette.textPrimary}) {
+    return TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.w500,
+      height: 1.4,
+      letterSpacing: -0.2,
+      color: color,
+    );
+  }
+
+  static TextStyle title2B({Color color = Palette.textPrimary}) {
     return TextStyle(
       fontSize: 18,
       fontWeight: FontWeight.bold,
@@ -168,21 +188,61 @@ class TextTypes {
     );
   }
 
-  static TextStyle title3({Color color = Palette.textPrimary}) {
+  static TextStyle title2SB({Color color = Palette.textPrimary}) {
+    return TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.w600,
+      height: 1.4,
+      letterSpacing: -0.18,
+      color: color,
+    );
+  }
+
+  static TextStyle title2M({Color color = Palette.textPrimary}) {
+    return TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.w500,
+      height: 1.4,
+      letterSpacing: -0.18,
+      color: color,
+    );
+  }
+
+  static TextStyle title3SB({Color color = Palette.textPrimary}) {
     return TextStyle(
       fontSize: 16,
       fontWeight: FontWeight.w600,
-      height: 1.5,
+      height: 1.4,
       letterSpacing: -0.08,
       color: color,
     );
   }
 
-  static TextStyle title4({Color color = Palette.textPrimary}) {
+  static TextStyle title3M({Color color = Palette.textPrimary}) {
+    return TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+      height: 1.4,
+      letterSpacing: -0.08,
+      color: color,
+    );
+  }
+
+  static TextStyle title4SB({Color color = Palette.textPrimary}) {
     return TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.w600,
-      height: 1.5,
+      height: 1.4,
+      letterSpacing: -0.07,
+      color: color,
+    );
+  }
+
+  static TextStyle title4M({Color color = Palette.textPrimary}) {
+    return TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w500,
+      height: 1.4,
       letterSpacing: -0.07,
       color: color,
     );
