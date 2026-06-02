@@ -35,31 +35,33 @@ class HomePage extends StatelessWidget {
           ],
         ), //title 지정
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          children: [
-            const ScheduleCalendar(),
-            SizedBox(height: 16),
-            Row(
-              children: List.generate(
-                40,
-                (index) => Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 0.1),
-                    height: 1,
-                    color: index.isEven
-                        ? Palette.borderDefault
-                        : Colors.transparent,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            children: [
+              const ScheduleCalendar(),
+              SizedBox(height: 16),
+              Row(
+                children: List.generate(
+                  40,
+                  (index) => Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 0.1),
+                      height: 1,
+                      color: index.isEven
+                          ? Palette.borderDefault
+                          : Colors.transparent,
+                    ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: 16),
-            Row(children: [Text("오늘의 수업", style: TextTypes.title2())]),
-            SizedBox(height: 12),
-            ScheduleTabBar(selectedIndex: 1, onTap: (index) {}),
-          ],
+              SizedBox(height: 16),
+              Row(children: [Text("오늘의 수업", style: TextTypes.title2())]),
+              SizedBox(height: 12),
+              ScheduleTabBar(selectedIndex: 1, onTap: (index) {}),
+            ],
+          ),
         ),
       ),
     );
