@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'common/theme.dart';
-import 'features/auth/view/profile_setup_page.dart';
 import 'features/class/view/class_main.dart';
 
 void main() {
