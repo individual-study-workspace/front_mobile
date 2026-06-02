@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'common/theme.dart';
 import 'features/auth/view/profile_setup_page.dart';
+import 'features/class/view/class_main.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -13,6 +14,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(theme: AppTheme.lightTheme, home: ProfileSetupPage());
+    return MaterialApp(theme: AppTheme.lightTheme, home: ClassMainPage());
   }
 }
