@@ -149,7 +149,7 @@ class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> {
 
                     const SizedBox(height: 8),
 
-                    LargeSearchInputField(
+                    TextInput(
                       hintText: '홍길동',
                       controller: emailController,
                       onChanged: (value) {
@@ -167,9 +167,9 @@ class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> {
 
                     const SizedBox(height: 8),
 
-                    LargeSearchInputField(
+                    TextInput(
                       hintText: 'user@gmail.com',
-                      state: LargeInputState.readOnly,
+                      state: TextInputState.readOnly,
                     ),
 
                     const SizedBox(height: 20),
