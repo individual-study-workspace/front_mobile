@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:front_mobile/common/theme.dart';
 
+import '../../model/schedule.dart';
+
 class ScheduleTabBar extends StatelessWidget {
   final int selectedIndex;
-  final Function(int) onTap;
-
+  final ValueChanged<int> onTap;
   final int classCount;
   final int assignmentCount;
   final int todoCount;
-
-  final List<ScheduleItem> items;
+  final List<Schedule> schedules;
 
   const ScheduleTabBar({
     super.key,
@@ -19,7 +19,7 @@ class ScheduleTabBar extends StatelessWidget {
     this.classCount = 0,
     this.assignmentCount = 0,
     this.todoCount = 0,
-    this.items = const [],
+    this.schedules = const [],
   });
 
   @override
@@ -50,10 +50,8 @@ class ScheduleTabBar extends StatelessWidget {
             ),
           ],
         ),
-
         const SizedBox(height: 12),
-
-        if (items.isEmpty)
+        if (schedules.isEmpty)
           Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
@@ -95,26 +93,27 @@ class ScheduleTabBar extends StatelessWidget {
           )
         else
           Column(
-            children: items
+            children: schedules
                 .map(
-                  (item) => Padding(
+                  (schedule) => Padding(
                     padding: const EdgeInsets.only(bottom: 8),
                     child: Container(
                       width: double.infinity,
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Palette.borderDefault),
+                        border: Border.all(color: Palette.borderLight),
                       ),
                       child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          // 타입별 색상 바
                           Container(
                             width: 3,
                             height: 42,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(99),
-                              color: Palette.primary,
+                              color: schedule.type.color,
                             ),
                           ),
                           const SizedBox(width: 12),
@@ -122,12 +121,12 @@ class ScheduleTabBar extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(item.title, style: TextTypes.title3()),
+                                Text(schedule.title, style: TextTypes.title3()),
                                 const SizedBox(height: 4),
                                 Text(
-                                  item.deadline,
-                                  style: TextTypes.body2R(
-                                    color: Palette.textSecondary,
+                                  schedule.deadline,
+                                  style: TextTypes.title4(
+                                    color: Palette.textTertiary,
                                   ),
                                 ),
                               ],
@@ -185,6 +184,7 @@ class ScheduleTabBar extends StatelessWidget {
               ).copyWith(height: 1.0),
             ),
             const SizedBox(width: 4),
+            // count가 0이면 뱃지 안 보임
             if (count > 0)
               Container(
                 width: 18,
@@ -206,11 +206,4 @@ class ScheduleTabBar extends StatelessWidget {
       ),
     );
   }
-}
-
-class ScheduleItem {
-  final String title;
-  final String deadline;
-
-  const ScheduleItem({required this.title, required this.deadline});
 }

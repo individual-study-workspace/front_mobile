@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:front_mobile/common/theme.dart';
 
-class ScheduleCalendar extends StatefulWidget {
-  const ScheduleCalendar({super.key});
+import '../../model/schedule.dart';
 
-  @override
-  State<ScheduleCalendar> createState() => _ScheduleCalendarState();
-}
+class ScheduleCalendar extends StatelessWidget {
+  final DateTime currentMonth;
+  final DateTime selectedDate;
+  final List<ScheduleType> Function(DateTime date) scheduleTypesForDate;
+  final ValueChanged<DateTime> onDateSelected;
+  final VoidCallback onPreviousMonth;
+  final VoidCallback onNextMonth;
 
-class _ScheduleCalendarState extends State<ScheduleCalendar> {
-  DateTime currentMonth = DateTime.now();
-  DateTime selectedDate = DateTime.now();
-
-  final Map<int, List<ScheduleType>> scheduleMap = {
-    6: [ScheduleType.classType, ScheduleType.assignment],
-    13: [ScheduleType.assignment],
-    18: [ScheduleType.todo],
-  };
+  const ScheduleCalendar({
+    super.key,
+    required this.currentMonth,
+    required this.selectedDate,
+    required this.scheduleTypesForDate,
+    required this.onDateSelected,
+    required this.onPreviousMonth,
+    required this.onNextMonth,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -42,22 +45,14 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _arrowButton(Icons.chevron_left, () {
-          setState(() {
-            currentMonth = DateTime(currentMonth.year, currentMonth.month - 1);
-          });
-        }),
+        _arrowButton(Icons.chevron_left, onPreviousMonth),
         const SizedBox(width: 12),
         Text(
           '${currentMonth.year}년 ${currentMonth.month}월',
           style: TextTypes.title2(),
         ),
         const SizedBox(width: 12),
-        _arrowButton(Icons.chevron_right, () {
-          setState(() {
-            currentMonth = DateTime(currentMonth.year, currentMonth.month + 1);
-          });
-        }),
+        _arrowButton(Icons.chevron_right, onNextMonth),
       ],
     );
   }
@@ -101,6 +96,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
               final index = weekIndex * 7 + dayIndex;
               final date = days[index];
 
+              // null이면 해당 월 범위 밖 (앞뒤 빈 칸)
               if (date == null) {
                 return const Expanded(child: SizedBox(height: 47));
               }
@@ -115,7 +111,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
 
   Widget _buildDateCell(DateTime date) {
     final isSelected = _isSameDate(date, selectedDate);
-    final schedules = scheduleMap[date.day] ?? [];
+    final schedules = scheduleTypesForDate(date);
 
     Color textColor = Palette.textPrimary;
 
@@ -128,11 +124,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
     }
 
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          selectedDate = date;
-        });
-      },
+      onTap: () => onDateSelected(date),
       child: SizedBox(
         height: 46,
         child: Column(
@@ -166,6 +158,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
     );
   }
 
+  // 최대 3개까지만 표시
   Widget _buildScheduleDots(List<ScheduleType> schedules) {
     if (schedules.isEmpty) {
       return const SizedBox(height: 10);
@@ -224,6 +217,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
     final firstDay = DateTime(currentMonth.year, currentMonth.month, 1);
     final lastDay = DateTime(currentMonth.year, currentMonth.month + 1, 0);
 
+    // DateTime.weekday는 월=1 기준이라 일요일 시작으로 보정
     final startBlank = firstDay.weekday % 7;
     final days = <DateTime?>[];
 
@@ -235,6 +229,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
       days.add(DateTime(currentMonth.year, currentMonth.month, day));
     }
 
+    // 6주 고정 레이아웃을 위해 42칸 채우기
     while (days.length < 42) {
       days.add(null);
     }
@@ -244,20 +239,5 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
 
   bool _isSameDate(DateTime a, DateTime b) {
     return a.year == b.year && a.month == b.month && a.day == b.day;
-  }
-}
-
-enum ScheduleType { classType, assignment, todo }
-
-extension ScheduleTypeColor on ScheduleType {
-  Color get color {
-    switch (this) {
-      case ScheduleType.classType:
-        return Palette.primary;
-      case ScheduleType.assignment:
-        return Palette.green400;
-      case ScheduleType.todo:
-        return Palette.yellow400;
-    }
   }
 }
