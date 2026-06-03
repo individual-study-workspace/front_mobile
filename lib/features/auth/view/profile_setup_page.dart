@@ -151,7 +151,7 @@ class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> {
 
                     LargeSearchInputField(
                       hintText: '홍길동',
-                      controller: emailController,
+                      controller: nameController,
                       onChanged: (value) {
                         ref.read(signUpProvider.notifier).setName(value);
                       },
@@ -169,6 +169,7 @@ class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> {
 
                     LargeSearchInputField(
                       hintText: 'user@gmail.com',
+                      controller: emailController,
                       state: LargeInputState.readOnly,
                     ),
 
