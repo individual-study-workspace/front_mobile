@@ -6,8 +6,14 @@ import '../theme.dart';
 class SubAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final VoidCallback? onBackTap;
+  final List<Widget>? actions;
 
-  const SubAppBar({super.key, required this.title, this.onBackTap});
+  const SubAppBar({
+    super.key,
+    required this.title,
+    this.onBackTap,
+    this.actions,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +37,9 @@ class SubAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
 
-      title: Text(title, style: TextTypes.title3SB()),
+      title: Text(title, style: TextTypes.title3M()),
+
+      actions: actions,
     );
   }
 
