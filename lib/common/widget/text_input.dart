@@ -11,6 +11,8 @@ class TextInput extends StatelessWidget {
   final String? description;
   final String hintText;
   final String? helperText;
+  final String? focusedHelperText;
+  final String? errorText;
 
   final TextEditingController? controller;
   final FocusNode? focusNode;
@@ -22,6 +24,7 @@ class TextInput extends StatelessWidget {
   final ValueChanged<String>? onChanged;
 
   final String? leftIconPath;
+  final int? maxLength;
 
   const TextInput({
     super.key,
@@ -29,6 +32,8 @@ class TextInput extends StatelessWidget {
     this.description,
     this.hintText = '내용을 입력하세요',
     this.helperText,
+    this.focusedHelperText,
+    this.errorText,
     this.controller,
     this.focusNode,
     this.state = TextInputState.normal,
@@ -36,6 +41,7 @@ class TextInput extends StatelessWidget {
     this.onClear,
     this.onChanged,
     this.leftIconPath,
+    this.maxLength,
   });
 
   bool get _isDisabled => state == TextInputState.disabled;
@@ -44,20 +50,14 @@ class TextInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textLength = controller?.text.length ?? 0;
+
     final borderColor = switch (state) {
       TextInputState.normal => Palette.borderDefault,
       TextInputState.focused => Palette.blue500,
       TextInputState.error => Palette.statusDanger,
       TextInputState.disabled => Palette.borderLight,
       TextInputState.readOnly => Palette.borderDefault,
-    };
-
-    final helperColor = switch (state) {
-      TextInputState.normal => Palette.gray40,
-      TextInputState.focused => Palette.blue600,
-      TextInputState.error => Palette.red600,
-      TextInputState.disabled => Palette.gray0,
-      TextInputState.readOnly => Palette.gray0,
     };
 
     final backgroundColor = switch (state) {
@@ -113,7 +113,7 @@ class TextInput extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             description!,
-            style: const TextStyle(fontSize: 12, color: Palette.gray40),
+            style: TextTypes.caption1(color: Palette.textTertiary),
           ),
           const SizedBox(height: 8),
         ],
@@ -171,34 +171,37 @@ class TextInput extends StatelessWidget {
           ),
         ),
 
-        if (helperText != null) ...[
-          const SizedBox(height: 8),
+        if (errorText != null ||
+            helperText != null ||
+            focusedHelperText != null ||
+            maxLength != null) ...[
+          const SizedBox(height: 6),
           Row(
             children: [
-              if (state == TextInputState.error)
-                SvgPicture.asset(
-                  'assets/icons/info_filled.svg',
-                  width: 16,
-                  height: 16,
-                  colorFilter: ColorFilter.mode(helperColor, BlendMode.srcIn),
-                ),
-
-              if (state == TextInputState.focused)
-                SvgPicture.asset(
-                  'assets/icons/check_filled.svg',
-                  width: 16,
-                  height: 16,
-                  colorFilter: ColorFilter.mode(helperColor, BlendMode.srcIn),
-                ),
-
-              if (state == TextInputState.error ||
-                  state == TextInputState.focused)
-                const SizedBox(width: 4),
-
-              Text(
-                helperText!,
-                style: TextStyle(fontSize: 12, color: helperColor),
+              Expanded(
+                child: errorText != null
+                    ? Text(
+                        errorText!,
+                        style: TextTypes.caption1(color: Palette.red600),
+                      )
+                    : state == TextInputState.focused &&
+                          focusedHelperText != null
+                    ? Text(
+                        focusedHelperText!,
+                        style: TextTypes.caption1(color: Palette.blue600),
+                      )
+                    : helperText != null
+                    ? Text(
+                        helperText!,
+                        style: TextTypes.caption1(color: Palette.textTertiary),
+                      )
+                    : const SizedBox.shrink(),
               ),
+              if (maxLength != null)
+                Text(
+                  '$textLength/$maxLength',
+                  style: TextTypes.caption1(color: Palette.textTertiary),
+                ),
             ],
           ),
         ],
