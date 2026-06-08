@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:front_mobile/common/widget/button.dart';
+import 'package:front_mobile/common/widget/main_app_bar.dart';
 
-import '../../../common/widget/main_app_bar.dart';
 import 'package:front_mobile/common/theme.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
