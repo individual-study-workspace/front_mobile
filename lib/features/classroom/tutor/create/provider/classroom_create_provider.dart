@@ -1,4 +1,5 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 import '../model/classroom_create_state.dart';
 
@@ -86,11 +87,11 @@ class ClassroomCreateNotifier extends StateNotifier<ClassroomCreateState> {
     state = state.copyWith(selectedDays: days);
   }
 
-  void setStartDay(String value) {
+  void setStartDay(DateTime value) {
     state = state.copyWith(startDay: value);
   }
 
-  void setStartTime(String value) {
+  void setStartTime(TimeOfDay value) {
     state = state.copyWith(startTime: value);
   }
 
@@ -101,6 +102,10 @@ class ClassroomCreateNotifier extends StateNotifier<ClassroomCreateState> {
   /// payment
   void setBillingType(BillingType value) {
     state = state.copyWith(billingType: value);
+  }
+
+  void setBillingDate(int value) {
+    state = state.copyWith(billingDate: value);
   }
 
   void setLessonFee(int? value) {

@@ -4,42 +4,26 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:front_mobile/common/theme.dart';
 
+import '../../../../../common/widget/common_bottom_sheet.dart';
 import '../model/classroom_create_state.dart';
 import '../provider/classroom_create_provider.dart';
 
-class CreatePaymentStep extends ConsumerStatefulWidget {
-  const CreatePaymentStep({super.key});
+class CreatePaymentStep extends ConsumerWidget {
+  final TextEditingController lessonFeeController;
+  final TextEditingController monthlyLessonFeeController;
+  final TextEditingController perLessonFeeController;
+  final TextEditingController perLessonCountController;
+
+  const CreatePaymentStep({
+    super.key,
+    required this.lessonFeeController,
+    required this.monthlyLessonFeeController,
+    required this.perLessonFeeController,
+    required this.perLessonCountController,
+  });
 
   @override
-  ConsumerState<CreatePaymentStep> createState() => _CreatePaymentStepState();
-}
-
-class _CreatePaymentStepState extends ConsumerState<CreatePaymentStep> {
-  late final TextEditingController lessonFeeController;
-  late final TextEditingController monthlyLessonFeeController;
-  late final TextEditingController perLessonFeeController;
-  late final TextEditingController perLessonCountController;
-
-  @override
-  void initState() {
-    super.initState();
-    lessonFeeController = TextEditingController();
-    monthlyLessonFeeController = TextEditingController();
-    perLessonFeeController = TextEditingController();
-    perLessonCountController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    lessonFeeController.dispose();
-    monthlyLessonFeeController.dispose();
-    perLessonFeeController.dispose();
-    perLessonCountController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final classroomCreateState = ref.watch(classroomCreateProvider);
 
     return Column(
@@ -174,7 +158,23 @@ class _CreatePaymentStepState extends ConsumerState<CreatePaymentStep> {
             ),
             const SizedBox(height: 8),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                final tempDay = ValueNotifier(classroomCreateState.billingDate);
+
+                CommonBottomSheet.show(
+                  context,
+                  title: '정기 청구일',
+                  content: _DayPickerContent(dayNotifier: tempDay),
+                  buttonText: '선택',
+                  onButtonTap: () {
+                    ref
+                        .read(classroomCreateProvider.notifier)
+                        .setBillingDate(tempDay.value);
+
+                    Navigator.pop(context);
+                  },
+                );
+              },
               borderRadius: BorderRadius.circular(8),
               child: Container(
                 height: 48,
@@ -190,7 +190,7 @@ class _CreatePaymentStepState extends ConsumerState<CreatePaymentStep> {
                     children: [
                       Expanded(
                         child: Text(
-                          '',
+                          '매달 ${classroomCreateState.billingDate}일',
                           style: TextTypes.title3SB(
                             color: Palette.textSecondary,
                           ),
@@ -379,6 +379,119 @@ class _BillingType extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+///일자 선택 바텀시트
+class _DayPickerContent extends StatelessWidget {
+  final ValueNotifier<int> dayNotifier;
+
+  const _DayPickerContent({
+    super.key,
+    required this.dayNotifier,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        ValueListenableBuilder<int>(
+          valueListenable: dayNotifier,
+          builder: (context, selectedDay, _) {
+            return Text(
+              '$selectedDay일 / 말일',
+              style: TextTypes.caption1(
+                color: Palette.textTertiary,
+              ),
+            );
+          },
+        ),
+
+        const SizedBox(height: 12),
+
+        SizedBox(
+          height: 180,
+          child: ValueListenableBuilder<int>(
+            valueListenable: dayNotifier,
+            builder: (context, selectedDay, _) {
+              return Stack(
+                children: [
+                  ListWheelScrollView.useDelegate(
+                    itemExtent: 44,
+                    physics: const FixedExtentScrollPhysics(),
+                    controller: FixedExtentScrollController(
+                      initialItem: selectedDay - 1,
+                    ),
+                    onSelectedItemChanged: (index) {
+                      dayNotifier.value = index + 1;
+                    },
+                    childDelegate: ListWheelChildBuilderDelegate(
+                      childCount: 32,
+                      builder: (context, index) {
+                        final day = index + 1;
+                        final isSelected = selectedDay == day;
+
+                        return Center(
+                          child: Text(
+                            index == 31 ? '말일' : '${day}일',
+                            style: TextTypes.title3SB(
+                              color: isSelected
+                                  ? Palette.textPrimary
+                                  : Palette.textTertiary,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+
+                  /// 선택 영역
+                  IgnorePointer(
+                    child: Center(
+                      child: Container(
+                        height: 44,
+                        margin: const EdgeInsets.symmetric(horizontal: 16),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            top: BorderSide(
+                              color: Palette.borderDefault,
+                            ),
+                            bottom: BorderSide(
+                              color: Palette.borderDefault,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+
+        const SizedBox(height: 12),
+
+        Row(
+          children: [
+            Icon(
+              Icons.info,
+              size: 16,
+              color: Palette.primary,
+            ),
+            const SizedBox(width: 4),
+            Expanded(
+              child: Text(
+                '해당 날짜가 없는 달은 말일에 청구됩니다.',
+                style: TextTypes.caption2(
+                  color: Palette.primary,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

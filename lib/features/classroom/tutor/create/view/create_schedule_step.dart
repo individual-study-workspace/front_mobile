@@ -1,41 +1,35 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:front_mobile/common/theme.dart';
 
+import '../../../../../common/widget/common_bottom_sheet.dart';
 import '../model/classroom_create_state.dart';
 import '../provider/classroom_create_provider.dart';
 
-class CreateScheduleStep extends ConsumerStatefulWidget {
-  const CreateScheduleStep({super.key});
+class CreateScheduleStep extends ConsumerWidget {
+  final TextEditingController totalLessonsController;
+
+  const CreateScheduleStep({super.key, required this.totalLessonsController});
 
   @override
-  ConsumerState<CreateScheduleStep> createState() => _CreateScheduleStepState();
-}
-
-class _CreateScheduleStepState extends ConsumerState<CreateScheduleStep> {
-  late final TextEditingController totalLessonsController;
-
-  @override
-  void initState() {
-    super.initState();
-    totalLessonsController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    totalLessonsController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final classroomCreateState = ref.watch(classroomCreateProvider);
+    final tempHour = ValueNotifier(
+      classroomCreateState.startTime.hour,
+    );
+
+    final tempMinute = ValueNotifier(
+      classroomCreateState.startTime.minute,
+    );
+
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+
         ///위쪽 설명 부분
         Text('2/4', style: TextTypes.caption1(color: Palette.primary)),
         const SizedBox(height: 4),
@@ -58,7 +52,7 @@ class _CreateScheduleStepState extends ConsumerState<CreateScheduleStep> {
               child: _SelectionChips(
                 title: '매주',
                 isSelected:
-                    classroomCreateState.scheduleType == ScheduleType.weekly,
+                classroomCreateState.scheduleType == ScheduleType.weekly,
                 onTap: () {
                   ref
                       .read(classroomCreateProvider.notifier)
@@ -73,7 +67,7 @@ class _CreateScheduleStepState extends ConsumerState<CreateScheduleStep> {
               child: _SelectionChips(
                 title: '격주',
                 isSelected:
-                    classroomCreateState.scheduleType == ScheduleType.biweekly,
+                classroomCreateState.scheduleType == ScheduleType.biweekly,
                 onTap: () {
                   ref
                       .read(classroomCreateProvider.notifier)
@@ -87,7 +81,7 @@ class _CreateScheduleStepState extends ConsumerState<CreateScheduleStep> {
               child: _SelectionChips(
                 title: '1회성',
                 isSelected:
-                    classroomCreateState.scheduleType == ScheduleType.oneTime,
+                classroomCreateState.scheduleType == ScheduleType.oneTime,
                 onTap: () {
                   ref
                       .read(classroomCreateProvider.notifier)
@@ -128,7 +122,7 @@ class _CreateScheduleStepState extends ConsumerState<CreateScheduleStep> {
         Text('수업 시작일', style: TextTypes.title4M(color: Palette.textSecondary)),
         const SizedBox(height: 8),
         _DateTimeField(
-          value: classroomCreateState.startDay,
+          value: formatDate(classroomCreateState.startDay),
           iconPath: 'assets/icons/calendar_outline.svg',
           onTap: () {},
         ),
@@ -141,9 +135,32 @@ class _CreateScheduleStepState extends ConsumerState<CreateScheduleStep> {
         ),
         const SizedBox(height: 8),
         _DateTimeField(
-          value: classroomCreateState.startTime,
+          value: formatTime(classroomCreateState.startTime),
           iconPath: 'assets/icons/time_outline.svg',
-          onTap: () {},
+          onTap: () {
+            CommonBottomSheet.show(
+              context,
+              title: '수업 시작 시간',
+              content: _TimePickerContent(
+                hourNotifier: tempHour,
+                minuteNotifier: tempMinute,
+                initialHour: classroomCreateState.startTime.hour,
+                initialMinute: classroomCreateState.startTime.minute,
+              ),
+              buttonText: '선택',
+              onButtonTap: () {
+                ref.
+                read(classroomCreateProvider.notifier)
+                    .setStartTime(
+                  TimeOfDay(
+                    hour: tempHour.value,
+                    minute: tempMinute.value,
+                  ),
+                );
+                Navigator.pop(context);
+              },
+            );
+          },
         ),
 
         ///총 수업 횟수
@@ -225,7 +242,7 @@ class _SelectionChips extends StatelessWidget {
   }
 }
 
-///수업 시작인, 수업 시작 시간 필드
+///수업 시작일, 수업 시작 시간 필드
 class _DateTimeField extends StatelessWidget {
   final String value;
   final String iconPath;
@@ -257,7 +274,7 @@ class _DateTimeField extends StatelessWidget {
               Expanded(
                 child: Text(
                   value,
-                  style: TextTypes.title3SB(color: Palette.textSecondary),
+                  style: TextTypes.title3SB(color: Palette.textTertiary),
                 ),
               ),
 
@@ -273,6 +290,103 @@ class _DateTimeField extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+class _TimePickerContent extends StatelessWidget {
+  final int initialHour;
+  final int initialMinute;
+
+  final ValueNotifier<int> hourNotifier;
+  final ValueNotifier<int> minuteNotifier;
+
+  const _TimePickerContent({
+    super.key,
+    required this.initialHour,
+    required this.initialMinute,
+    required this.hourNotifier,
+    required this.minuteNotifier,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 180,
+      child: Stack(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: CupertinoPicker(
+                  selectionOverlay: const SizedBox.shrink(),
+                  itemExtent: 44,
+                  useMagnifier: true,
+                  magnification: 1.05,
+                  scrollController: FixedExtentScrollController(
+                    initialItem: initialHour,
+                  ),
+                  onSelectedItemChanged: (value) {
+                    hourNotifier.value = value;
+                  },
+                  children: List.generate(
+                    24,
+                        (index) => Center(
+                      child: Text(
+                        index.toString().padLeft(2, '0'),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              Expanded(
+                child: CupertinoPicker(
+                  selectionOverlay: const SizedBox.shrink(),
+                  itemExtent: 44,
+                  useMagnifier: true,
+                  magnification: 1.05,
+                  scrollController: FixedExtentScrollController(
+                    initialItem: initialMinute,
+                  ),
+                  onSelectedItemChanged: (value) {
+                    minuteNotifier.value = value;
+                  },
+                  children: List.generate(
+                    60,
+                        (index) => Center(
+                      child: Text(
+                        index.toString().padLeft(2, '0'),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          /// 선택 영역 (가운데 끊김 없이 하나로)
+          IgnorePointer(
+            child: Center(
+              child: Container(
+                height: 44,
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: BoxDecoration(
+                  color: Palette.bgBase,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border(
+                    top: BorderSide(
+                      color: Palette.borderDefault,
+                    ),
+                    bottom: BorderSide(
+                      color: Palette.borderDefault,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

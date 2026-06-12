@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front_mobile/common/theme.dart';
 import 'package:front_mobile/common/widget/button.dart';
 import 'package:front_mobile/common/widget/sub_app_bar.dart';
+import 'package:front_mobile/features/classroom/tutor/create/view/confirm_step.dart';
 
 import '../../../../../common/widget/step_progress_bar.dart';
 import '../model/classroom_create_state.dart';
@@ -11,11 +12,56 @@ import 'create_basic_info_step.dart';
 import 'create_payment_step.dart';
 import 'create_schedule_step.dart';
 
-class ClassroomCreatePage extends ConsumerWidget {
+class ClassroomCreatePage extends ConsumerStatefulWidget {
   const ClassroomCreatePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ClassroomCreatePage> createState() =>
+      _ClassroomCreatePageState();
+}
+
+class _ClassroomCreatePageState extends ConsumerState<ClassroomCreatePage> {
+  late final TextEditingController classNameController;
+
+  late final TextEditingController classDescriptionController;
+
+  late final TextEditingController totalLessonsController;
+
+  late final TextEditingController lessonFeeController;
+  late final TextEditingController monthlyLessonFeeController;
+  late final TextEditingController perLessonFeeController;
+  late final TextEditingController perLessonCountController;
+
+  late final TextEditingController inviteCodeController;
+
+  @override
+  void initState() {
+    super.initState();
+    classNameController = TextEditingController();
+    classDescriptionController = TextEditingController();
+    totalLessonsController = TextEditingController();
+    lessonFeeController = TextEditingController();
+    monthlyLessonFeeController = TextEditingController();
+    perLessonFeeController = TextEditingController();
+    perLessonCountController = TextEditingController();
+    inviteCodeController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    classNameController.dispose();
+    classDescriptionController.dispose();
+    totalLessonsController.dispose();
+    lessonFeeController.dispose();
+    monthlyLessonFeeController.dispose();
+    perLessonFeeController.dispose();
+    perLessonCountController.dispose();
+    inviteCodeController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final state = ref.watch(classroomCreateProvider);
 
     final notifier = ref.read(classroomCreateProvider.notifier);
@@ -58,13 +104,25 @@ class ClassroomCreatePage extends ConsumerWidget {
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: switch (state.step) {
-                  ClassroomCreateStep.basicInfo => const CreateBasicInfoStep(),
+                  ClassroomCreateStep.basicInfo => CreateBasicInfoStep(
+                    classNameController: classNameController,
+                    classDescriptionController: classDescriptionController,
+                  ),
 
-                  ClassroomCreateStep.schedule => const CreateScheduleStep(),
+                  ClassroomCreateStep.schedule => CreateScheduleStep(
+                    totalLessonsController: totalLessonsController,
+                  ),
 
-                  ClassroomCreateStep.payment => const CreatePaymentStep(),
+                  ClassroomCreateStep.payment => CreatePaymentStep(
+                    lessonFeeController: lessonFeeController,
+                    monthlyLessonFeeController: monthlyLessonFeeController,
+                    perLessonFeeController: perLessonFeeController,
+                    perLessonCountController: perLessonCountController,
+                  ),
 
-                  ClassroomCreateStep.confirm => const CreateBasicInfoStep(),
+                  ClassroomCreateStep.confirm => ConfirmStep(
+                    inviteCodeController: inviteCodeController,
+                  ),
                 },
               ),
             ),
