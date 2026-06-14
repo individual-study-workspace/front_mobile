@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:front_mobile/common/theme.dart';
 import 'package:front_mobile/common/widget/sub_app_bar.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../app/route_path.dart';
 import '../../../common/widget/button.dart';
 import '../../../common/widget/checkbox.dart';
 import '../provider/sign_up_provider.dart';
@@ -294,7 +296,7 @@ class TermsAgreementPage extends ConsumerWidget {
                   isEnabled: signUpState.isTermsAgreed,
                   onPressed: signUpState.isTermsAgreed
                       ? () {
-                          // 다음 단계
+                          context.push(RoutePath.profileSetup);
                         }
                       : null,
                 ),
