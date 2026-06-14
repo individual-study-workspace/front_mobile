@@ -23,7 +23,7 @@ class TextInput extends StatelessWidget {
   final VoidCallback? onClear;
   final ValueChanged<String>? onChanged;
 
-  final String? leftIconPath;
+  final Widget? leftIcon;
   final int? maxLength;
 
   const TextInput({
@@ -40,7 +40,7 @@ class TextInput extends StatelessWidget {
     this.size = TextInputSize.large,
     this.onClear,
     this.onChanged,
-    this.leftIconPath,
+    this.leftIcon,
     this.maxLength,
   });
 
@@ -128,11 +128,11 @@ class TextInput extends StatelessWidget {
           ),
           child: Row(
             children: [
-              if (leftIconPath != null) ...[
-                SvgPicture.asset(
-                  leftIconPath!,
+              if (leftIcon != null) ...[
+                SizedBox(
                   width: leftIconSize,
                   height: leftIconSize,
+                  child: FittedBox(fit: BoxFit.contain, child: leftIcon),
                 ),
                 const SizedBox(width: 10),
               ],
