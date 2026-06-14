@@ -123,7 +123,7 @@ class TextInput extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
           decoration: BoxDecoration(
             color: backgroundColor,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(6),
             border: Border.all(color: borderColor),
           ),
           child: Row(
