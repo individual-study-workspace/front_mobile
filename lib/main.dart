@@ -5,7 +5,6 @@ import 'package:front_mobile/common/theme.dart';
 import 'app/app_router.dart';
 import 'common/theme.dart';
 
-
 void main() {
   runApp(const ProviderScope(child: MyApp()));
 }
