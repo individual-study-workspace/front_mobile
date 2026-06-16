@@ -1,5 +1,5 @@
 import '../../../core/api/api_client.dart';
-import '../model/schedule.dart';
+import 'package:front_mobile/common/model/schedule.dart';
 
 class HomeRepository {
   final ApiClient api;

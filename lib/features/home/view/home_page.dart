@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:front_mobile/common/theme.dart';
+import 'package:front_mobile/common/theme.dart';
 
 import '../provider/home_provider.dart';
-import 'widget/schedule_calendar.dart';
+import '../../../common/widget/schedule_calendar.dart';
 import 'widget/schedule_tab_bar.dart';
 
 class HomePage extends ConsumerWidget {
