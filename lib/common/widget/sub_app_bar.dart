@@ -14,12 +14,13 @@ class SubAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 0,
+      scrolledUnderElevation: 0,
       centerTitle: true,
 
-      leading:IconButton(
+      leading: IconButton(
         onPressed:
-        onBackTap ??
-                () {
+            onBackTap ??
+            () {
               Navigator.pop(context);
             },
 
@@ -30,7 +31,7 @@ class SubAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
 
-      title: Text(title, style: TextTypes.title3()),
+      title: Text(title, style: TextTypes.title3SB()),
     );
   }
 

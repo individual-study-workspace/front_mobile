@@ -2,128 +2,138 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:front_mobile/common/theme.dart';
 
-enum LargeInputState { normal, focused, error, disabled, readOnly }
+enum TextInputState { normal, focused, error, disabled, readOnly }
 
-class LargeSearchInputField extends StatelessWidget {
-  final String label;
+enum TextInputSize { large, medium, small }
+
+class TextInput extends StatelessWidget {
+  final Widget? label;
   final String? description;
   final String hintText;
   final String? helperText;
+  final String? focusedHelperText;
+  final String? errorText;
 
   final TextEditingController? controller;
   final FocusNode? focusNode;
 
-  final LargeInputState state;
+  final TextInputState state;
+  final TextInputSize size;
 
   final VoidCallback? onClear;
   final ValueChanged<String>? onChanged;
 
-  final String? leftIconPath;
+  final Widget? leftIcon;
+  final int? maxLength;
 
-  const LargeSearchInputField({
+  const TextInput({
     super.key,
-    this.label = '레이블',
+    this.label,
     this.description,
     this.hintText = '내용을 입력하세요',
     this.helperText,
+    this.focusedHelperText,
+    this.errorText,
     this.controller,
     this.focusNode,
-    this.state = LargeInputState.normal,
+    this.state = TextInputState.normal,
+    this.size = TextInputSize.large,
     this.onClear,
     this.onChanged,
-    this.leftIconPath,
+    this.leftIcon,
+    this.maxLength,
   });
 
-  bool get _isDisabled => state == LargeInputState.disabled;
+  bool get _isDisabled => state == TextInputState.disabled;
 
-  bool get _isReadOnly => state == LargeInputState.readOnly;
+  bool get _isReadOnly => state == TextInputState.readOnly;
 
   @override
   Widget build(BuildContext context) {
-    final borderColor = switch (state) {
-      LargeInputState.normal => Palette.borderDefault,
-      LargeInputState.focused => Palette.blue500,
-      LargeInputState.error => Palette.statusDanger,
-      LargeInputState.disabled => Palette.borderLight,
-      LargeInputState.readOnly => Palette.borderDefault,
-    };
+    final textLength = controller?.text.length ?? 0;
 
-    final helperColor = switch (state) {
-      LargeInputState.normal => Palette.gray40,
-      LargeInputState.focused => Palette.blue600,
-      LargeInputState.error => Palette.red600,
-      LargeInputState.disabled => Palette.gray0,
-      LargeInputState.readOnly => Palette.gray0,
+    final borderColor = switch (state) {
+      TextInputState.normal => Palette.borderDefault,
+      TextInputState.focused => Palette.blue500,
+      TextInputState.error => Palette.statusDanger,
+      TextInputState.disabled => Palette.borderLight,
+      TextInputState.readOnly => Palette.borderDefault,
     };
 
     final backgroundColor = switch (state) {
-      LargeInputState.normal => Palette.bgSurface,
-      LargeInputState.focused => Palette.bgSurface,
-      LargeInputState.error => Palette.statusDangerBg,
-      LargeInputState.disabled => Palette.bgBase,
-      LargeInputState.readOnly => Palette.bgBase,
+      TextInputState.normal => Palette.bgSurface,
+      TextInputState.focused => Palette.bgSurface,
+      TextInputState.error => Palette.statusDangerBg,
+      TextInputState.disabled => Palette.bgBase,
+      TextInputState.readOnly => Palette.bgBase,
     };
 
-    final textColor = switch (state) {
-      LargeInputState.normal => Palette.textSecondary,
-      LargeInputState.focused => Palette.textPrimary,
-      LargeInputState.error => Palette.textSecondary,
-      LargeInputState.disabled => Palette.textDisabled,
-      LargeInputState.readOnly => Palette.textSecondary,
+    final double height = switch (size) {
+      TextInputSize.large => 56,
+      TextInputSize.medium => 48,
+      TextInputSize.small => 40,
     };
 
-    final hintColor = switch (state) {
-      LargeInputState.normal => Palette.textSecondary,
-      LargeInputState.focused => Palette.textPrimary,
-      LargeInputState.error => Palette.textSecondary,
-      LargeInputState.disabled => Palette.textDisabled,
-      LargeInputState.readOnly => Palette.textSecondary,
+    final double horizontalPadding = switch (size) {
+      TextInputSize.large => 16,
+      TextInputSize.medium => 14,
+      TextInputSize.small => 10,
+    };
+
+    final double leftIconSize = switch (size) {
+      TextInputSize.large => 24,
+      TextInputSize.medium => 20,
+      TextInputSize.small => 20,
+    };
+
+    final double clearIconSize = switch (size) {
+      TextInputSize.large => 24,
+      TextInputSize.medium => 20,
+      TextInputSize.small => 20,
+    };
+
+    final textStyle = switch (size) {
+      TextInputSize.large => TextTypes.body1R(color: Palette.textPrimary),
+      TextInputSize.medium => TextTypes.body2R(color: Palette.textPrimary),
+      TextInputSize.small => TextTypes.body2R(color: Palette.textPrimary),
+    };
+
+    final hintStyle = switch (size) {
+      TextInputSize.large => TextTypes.body1R(color: Palette.textTertiary),
+      TextInputSize.medium => TextTypes.body2R(color: Palette.textTertiary),
+      TextInputSize.small => TextTypes.body2R(color: Palette.textTertiary),
     };
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (label != null) ...[
-          Row(
-            children: [
-              Icon(Icons.info_outline, size: 16, color: Palette.gray60),
-              const SizedBox(width: 4),
-              Text(
-                label,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Palette.gray60,
-                ),
-              ),
-            ],
-          ),
-        ],
-
-        const SizedBox(height: 4),
+        if (label != null) ...[label!, const SizedBox(height: 8)],
 
         if (description != null) ...[
           const SizedBox(height: 4),
           Text(
             description!,
-            style: const TextStyle(fontSize: 12, color: Palette.gray40),
+            style: TextTypes.caption1(color: Palette.textTertiary),
           ),
+          const SizedBox(height: 8),
         ],
 
-        const SizedBox(height: 8),
-
         Container(
-          height: 56,
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          height: height,
+          padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
           decoration: BoxDecoration(
             color: backgroundColor,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(6),
             border: Border.all(color: borderColor),
           ),
           child: Row(
             children: [
-              if (leftIconPath != null) ...[
-                SvgPicture.asset(leftIconPath!, width: 20, height: 20),
+              if (leftIcon != null) ...[
+                SizedBox(
+                  width: leftIconSize,
+                  height: leftIconSize,
+                  child: FittedBox(fit: BoxFit.contain, child: leftIcon),
+                ),
                 const SizedBox(width: 10),
               ],
 
@@ -131,60 +141,67 @@ class LargeSearchInputField extends StatelessWidget {
                 child: TextField(
                   controller: controller,
                   focusNode: focusNode,
-                  onChanged: _isDisabled ? null : onChanged,
                   enabled: !_isDisabled,
                   readOnly: _isReadOnly,
-                  style: TextStyle(fontSize: 16, color: textColor),
+                  onChanged: _isDisabled ? null : onChanged,
+                  style: textStyle,
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     isCollapsed: true,
                     hintText: hintText,
-                    hintStyle: TextStyle(fontSize: 16, color: hintColor),
+                    hintStyle: hintStyle,
                   ),
                 ),
               ),
 
-              GestureDetector(
-                onTap: _isDisabled ? null : onClear,
-                child: SvgPicture.asset(
-                  'assets/icons/xbox_filled.svg',
-                  width: 24,
-                  height: 24,
+              if (controller?.text.isNotEmpty ?? false)
+                GestureDetector(
+                  onTap: _isDisabled ? null : onClear,
+                  child: SvgPicture.asset(
+                    'assets/icons/xbox_filled.svg',
+                    width: clearIconSize,
+                    height: clearIconSize,
+                    colorFilter: ColorFilter.mode(
+                      Palette.iconTertiary,
+                      BlendMode.srcIn,
+                    ),
+                  ),
                 ),
-              ),
             ],
           ),
         ),
 
-        if (helperText != null) ...[
-          const SizedBox(height: 8),
+        if (errorText != null ||
+            helperText != null ||
+            focusedHelperText != null ||
+            maxLength != null) ...[
+          const SizedBox(height: 6),
           Row(
             children: [
-              if (state == LargeInputState.error ||
-                  state == LargeInputState.focused) ...[
-                if (state == LargeInputState.error) ...[
-                  SvgPicture.asset(
-                    'assets/icons/info_filled.svg',
-                    width: 16,
-                    height: 16,
-                    color: helperColor,
-                  ),
-                ],
-                if (state == LargeInputState.focused) ...[
-                  SvgPicture.asset(
-                    'assets/icons/xbox_filled.svg',
-                    width: 16,
-                    height: 16,
-                    color: helperColor,
-                  ),
-                ],
-              ],
-
-              const SizedBox(width: 4),
-              Text(
-                helperText!,
-                style: TextStyle(fontSize: 12, color: helperColor),
+              Expanded(
+                child: errorText != null
+                    ? Text(
+                        errorText!,
+                        style: TextTypes.caption1(color: Palette.red600),
+                      )
+                    : state == TextInputState.focused &&
+                          focusedHelperText != null
+                    ? Text(
+                        focusedHelperText!,
+                        style: TextTypes.caption1(color: Palette.blue600),
+                      )
+                    : helperText != null
+                    ? Text(
+                        helperText!,
+                        style: TextTypes.caption1(color: Palette.textTertiary),
+                      )
+                    : const SizedBox.shrink(),
               ),
+              if (maxLength != null)
+                Text(
+                  '$textLength/$maxLength',
+                  style: TextTypes.caption1(color: Palette.textTertiary),
+                ),
             ],
           ),
         ],

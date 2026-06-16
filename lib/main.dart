@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front_mobile/common/theme.dart';
 
-import 'package:front_mobile/features/home/view/home_page.dart';
+import 'app/app_router.dart';
+import 'common/theme.dart';
+
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(scaffoldBackgroundColor: Palette.bgSurface),
-      home: const HomePage(),
-    );
+  Widget build(BuildContext context, WidgetRef ref) {
+    final router = ref.watch(goRouterProvider);
+
+    return MaterialApp.router(theme: AppTheme.lightTheme, routerConfig: router);
   }
 }

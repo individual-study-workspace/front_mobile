@@ -48,7 +48,7 @@ class Modal extends StatelessWidget {
             ),
 
             /// 제목
-            Text(title, style: TextTypes.title1()),
+            Text(title, style: TextTypes.title1B()),
 
             /// 부제목
             if (description != null) ...[
