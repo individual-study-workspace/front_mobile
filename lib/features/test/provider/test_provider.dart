@@ -5,8 +5,6 @@ import '../../../core/api/api_client.dart';
 import '../controller/test_controller.dart';
 import '../repository/test_repository.dart';
 
-final apiClientProvider = Provider((ref) => ApiClient());
-
 final testRepositoryProvider = Provider(
   (ref) => TestRepository(ref.read(apiClientProvider)),
 );
