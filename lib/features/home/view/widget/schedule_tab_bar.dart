@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:front_mobile/common/theme.dart';
-
-import '../../model/schedule.dart';
+import 'package:front_mobile/common/model/schedule.dart';
 
 class ScheduleTabBar extends StatelessWidget {
   final int selectedIndex;
