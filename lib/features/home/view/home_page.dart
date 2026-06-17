@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:front_mobile/common/theme.dart';
-import 'package:front_mobile/common/theme.dart';
 
 import '../provider/home_provider.dart';
 import '../../../common/widget/schedule_calendar.dart';
@@ -73,7 +72,7 @@ class HomePage extends ConsumerWidget {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    Row(children: [Text('오늘의 수업', style: TextTypes.title2())]),
+                    Row(children: [Text('오늘의 수업', style: TextTypes.title2B())]),
                     const SizedBox(height: 12),
                     ScheduleTabBar(
                       selectedIndex: homeState.selectedTabIndex,

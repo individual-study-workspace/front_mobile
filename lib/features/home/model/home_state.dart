@@ -1,4 +1,4 @@
-import 'schedule.dart';
+import 'package:front_mobile/common/model/schedule.dart';
 
 class HomeState {
   final DateTime currentMonth;

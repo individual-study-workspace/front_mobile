@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:front_mobile/common/model/schedule.dart';
 import 'package:front_mobile/common/theme.dart';
-
-import '../../model/schedule.dart';
 
 class ScheduleCalendar extends StatelessWidget {
   final DateTime currentMonth;
@@ -49,7 +48,7 @@ class ScheduleCalendar extends StatelessWidget {
         const SizedBox(width: 12),
         Text(
           '${currentMonth.year}년 ${currentMonth.month}월',
-          style: TextTypes.title2(),
+          style: TextTypes.title2B(),
         ),
         const SizedBox(width: 12),
         _arrowButton(Icons.chevron_right, onNextMonth),
@@ -141,7 +140,7 @@ class ScheduleCalendar extends StatelessWidget {
               child: Text(
                 '${date.day}',
                 style: isSelected
-                    ? TextTypes.title1(color: Palette.textPrimaryInverse)
+                    ? TextTypes.title1B(color: Palette.textPrimaryInverse)
                     : TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w400,

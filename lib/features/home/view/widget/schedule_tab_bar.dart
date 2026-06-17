@@ -79,7 +79,7 @@ class ScheduleTabBar extends StatelessWidget {
                 const SizedBox(height: 12),
                 Text(
                   '예정된 일정이 없습니다.',
-                  style: TextTypes.title3(color: Palette.textPrimary),
+                  style: TextTypes.title3SB(color: Palette.textPrimary),
                 ),
                 const SizedBox(height: 4),
                 Text(
@@ -120,11 +120,14 @@ class ScheduleTabBar extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(schedule.title, style: TextTypes.title3()),
+                                Text(
+                                  schedule.title,
+                                  style: TextTypes.title3SB(),
+                                ),
                                 const SizedBox(height: 4),
                                 Text(
                                   schedule.deadline,
-                                  style: TextTypes.title4(
+                                  style: TextTypes.title4M(
                                     color: Palette.textTertiary,
                                   ),
                                 ),
@@ -178,7 +181,7 @@ class ScheduleTabBar extends StatelessWidget {
             const SizedBox(width: 4),
             Text(
               text,
-              style: TextTypes.title4(
+              style: TextTypes.title4M(
                 color: isSelected ? Palette.primary : Palette.textTertiary,
               ).copyWith(height: 1.0),
             ),
