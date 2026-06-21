@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:front_mobile/common/theme.dart';
 
 import '../model/classroom_create_state.dart';
@@ -61,20 +62,6 @@ class ConfirmStep extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '강의명',
-                      style: TextTypes.caption1(color: Palette.textTertiary),
-                    ),
-                    Text(
-                      classroomCreateState.title,
-                      style: TextTypes.title3M(color: Palette.textPrimary),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 12),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
                       '수업 방식',
                       style: TextTypes.caption1(color: Palette.textTertiary),
                     ),
@@ -100,7 +87,7 @@ class ConfirmStep extends ConsumerWidget {
                             ),
                           )
                         : Text(
-                            '매주 ${classroomCreateState.selectedDays.map((e) => e.label).join(',')} · ${classroomCreateState.startTime}',
+                            '매주 ${classroomCreateState.selectedDays.map((e) => e.label).join(',')} · ${formatTime(classroomCreateState.startTime)}',
                             style: TextTypes.title3M(
                               color: Palette.textPrimary,
                             ),
@@ -123,7 +110,7 @@ class ConfirmStep extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            '${classroomCreateState.startDay} 시작 · 총 ${classroomCreateState.totalLessons}',
+                            '${formatDate(classroomCreateState.startDay)} 시작 · 총 ${classroomCreateState.totalLessons}회차',
                             style: TextTypes.title4M(
                               color: Palette.textSecondary,
                             ),
@@ -138,27 +125,42 @@ class ConfirmStep extends ConsumerWidget {
                       '총 수업료 (수수료 포함)',
                       style: TextTypes.caption1(color: Palette.textTertiary),
                     ),
-                    Text(
-                      classroomCreateState.scheduleType == ScheduleType.oneTime
-                          ? '${classroomCreateState.lessonFee}원'
-                          : classroomCreateState.billingType ==
-                                BillingType.monthly
-                          ? '${classroomCreateState.monthlyLessonFee}원'
-                          : '${classroomCreateState.perLessonFee}원',
-                      style: TextTypes.title3M(color: Palette.primaryVariant),
-                    ),
+                    classroomCreateState.hasInput
+                        ? Text(
+                            '정산 정보 미설정',
+                            style: TextTypes.title3M(
+                              color: Palette.textTertiary,
+                            ),
+                          )
+                        : Text(
+                            classroomCreateState.scheduleType ==
+                                    ScheduleType.oneTime
+                                ? '${classroomCreateState.lessonFee}원'
+                                : classroomCreateState.billingType ==
+                                      BillingType.monthly
+                                ? '${classroomCreateState.monthlyLessonFee}원'
+                                : '${classroomCreateState.perLessonFee}원',
+                            style: TextTypes.title3M(
+                              color: Palette.primaryVariant,
+                            ),
+                          ),
                   ],
                 ),
                 if (classroomCreateState.scheduleType != ScheduleType.oneTime)
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(
-                        classroomCreateState.billingType == BillingType.monthly
-                            ? '${classroomCreateState.billingType.label} · 매달 ${classroomCreateState.billingDate}일'
-                            : '${classroomCreateState.billingType.label} · ${classroomCreateState.perLessonCount}회차 마다',
-                        style: TextTypes.title4M(color: Palette.textSecondary),
-                      ),
+                      classroomCreateState.hasInput
+                          ? Container()
+                          : Text(
+                              classroomCreateState.billingType ==
+                                      BillingType.monthly
+                                  ? '${classroomCreateState.billingType.label} · 매달 ${classroomCreateState.billingDate}일'
+                                  : '${classroomCreateState.billingType.label} · ${classroomCreateState.perLessonCount}회차 마다',
+                              style: TextTypes.title4M(
+                                color: Palette.textSecondary,
+                              ),
+                            ),
                     ],
                   ),
               ],
@@ -178,42 +180,33 @@ class ConfirmStep extends ConsumerWidget {
         const SizedBox(height: 8),
         GestureDetector(
           onLongPress: () async {
-            // await Clipboard.setData(
-            //   const ClipboardData(text: '복사할 내용'),
-            // );
-            //
-            // Fluttertoast.showToast(
-            //   msg: '복사되었습니다.',
-            // );
+            Clipboard.setData(
+              ClipboardData(text: classroomCreateState.inviteCode!),
+            );
           },
-          child:  Container(
+          child: Container(
             height: 48,
             padding: const EdgeInsets.symmetric(horizontal: 16),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
               border: Border.all(color: Palette.borderDefault),
             ),
-            alignment: Alignment.center,
-            child: TextField(
-              onChanged: (value) {
-                ref
-                    .read(classroomCreateProvider.notifier)
-                    .setMonthlyLessonFee(int.tryParse(value));
-              },
-              controller: inviteCodeController,
-              keyboardType: TextInputType.number,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              style: TextTypes.body2R(),
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                isCollapsed: true,
-                hintText: 'ex) 400,000',
-                hintStyle: TextTypes.body2R(color: Palette.textSecondary),
-              ),
+            child: Row(
+              children: [
+                Text(
+                  classroomCreateState.inviteCode!,
+                  style: TextTypes.title3SB(color: Palette.textTertiary),
+                ),
+                Spacer(),
+                SvgPicture.asset(
+                  'assets/icons/copy_outline.svg',
+                  width: 24,
+                  height: 24,
+                ),
+              ],
             ),
           ),
-        )
-
+        ),
       ],
     );
   }

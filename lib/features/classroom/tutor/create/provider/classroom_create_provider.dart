@@ -99,6 +99,32 @@ class ClassroomCreateNotifier extends StateNotifier<ClassroomCreateState> {
     state = state.copyWith(totalLessons: value);
   }
 
+  void selectCalendarDate(DateTime date) {
+    state = state.copyWith(selectedCalendarDate: date);
+  }
+
+  void goToPreviousMonth() {
+    final month = state.currentCalendarDate;
+    state = state.copyWith(
+      currentCalendarDate: DateTime(month.year, month.month - 1),
+    );
+  }
+
+  void goToNextMonth() {
+    final month = state.currentCalendarDate;
+    state = state.copyWith(
+      currentCalendarDate: DateTime(month.year, month.month + 1),
+    );
+  }
+
+  void setHasInput(bool value) {
+    state = state.copyWith(hasInput: value);
+  }
+
+  void setCurrentCalendarDate(DateTime date) {
+    state = state.copyWith(currentCalendarDate: date);
+  }
+
   /// payment
   void setBillingType(BillingType value) {
     state = state.copyWith(billingType: value);

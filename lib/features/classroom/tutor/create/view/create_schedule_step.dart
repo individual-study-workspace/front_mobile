@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:front_mobile/common/theme.dart';
 
 import '../../../../../common/widget/common_bottom_sheet.dart';
+import '../../../../../common/widget/common_calendar.dart';
 import '../model/classroom_create_state.dart';
 import '../provider/classroom_create_provider.dart';
 
@@ -17,19 +18,14 @@ class CreateScheduleStep extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final classroomCreateState = ref.watch(classroomCreateProvider);
-    final tempHour = ValueNotifier(
-      classroomCreateState.startTime.hour,
-    );
+    final classroomNotifier = ref.read(classroomCreateProvider.notifier);
 
-    final tempMinute = ValueNotifier(
-      classroomCreateState.startTime.minute,
-    );
-
+    final tempHour = ValueNotifier(classroomCreateState.startTime.hour);
+    final tempMinute = ValueNotifier(classroomCreateState.startTime.minute);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-
         ///위쪽 설명 부분
         Text('2/4', style: TextTypes.caption1(color: Palette.primary)),
         const SizedBox(height: 4),
@@ -52,7 +48,7 @@ class CreateScheduleStep extends ConsumerWidget {
               child: _SelectionChips(
                 title: '매주',
                 isSelected:
-                classroomCreateState.scheduleType == ScheduleType.weekly,
+                    classroomCreateState.scheduleType == ScheduleType.weekly,
                 onTap: () {
                   ref
                       .read(classroomCreateProvider.notifier)
@@ -67,7 +63,7 @@ class CreateScheduleStep extends ConsumerWidget {
               child: _SelectionChips(
                 title: '격주',
                 isSelected:
-                classroomCreateState.scheduleType == ScheduleType.biweekly,
+                    classroomCreateState.scheduleType == ScheduleType.biweekly,
                 onTap: () {
                   ref
                       .read(classroomCreateProvider.notifier)
@@ -81,7 +77,7 @@ class CreateScheduleStep extends ConsumerWidget {
               child: _SelectionChips(
                 title: '1회성',
                 isSelected:
-                classroomCreateState.scheduleType == ScheduleType.oneTime,
+                    classroomCreateState.scheduleType == ScheduleType.oneTime,
                 onTap: () {
                   ref
                       .read(classroomCreateProvider.notifier)
@@ -122,9 +118,46 @@ class CreateScheduleStep extends ConsumerWidget {
         Text('수업 시작일', style: TextTypes.title4M(color: Palette.textSecondary)),
         const SizedBox(height: 8),
         _DateTimeField(
-          value: formatDate(classroomCreateState.startDay),
+          value: formatDateWithWeek(classroomCreateState.startDay),
           iconPath: 'assets/icons/calendar_outline.svg',
-          onTap: () {},
+          onTap: () {
+            classroomNotifier.selectCalendarDate(
+              ref.read(classroomCreateProvider).startDay,
+            );
+            classroomNotifier.setCurrentCalendarDate(
+              ref.read(classroomCreateProvider).startDay,
+            );
+            CommonBottomSheet.showClose(
+              context,
+              title: '수업 시작일',
+              content: Consumer(
+                builder: (context, ref, child) {
+                  final state = ref.watch(classroomCreateProvider);
+                  final notifier = ref.read(classroomCreateProvider.notifier);
+
+                  return CommonCalendar(
+                    currentDate: state.currentCalendarDate,
+                    selectedDate: state.selectedCalendarDate,
+                    onDateSelected: notifier.selectCalendarDate,
+                    onPreviousMonth: notifier.goToPreviousMonth,
+                    onNextMonth: notifier.goToNextMonth,
+                    calendarType: CommonCalendarType.select,
+                    onTodayTap: () {
+                      notifier.selectCalendarDate(DateTime.now());
+                      notifier.setCurrentCalendarDate(DateTime.now());
+                    },
+                  );
+                },
+              ),
+              buttonText: '선택',
+              onButtonTap: () {
+                classroomNotifier.setStartDay(
+                  ref.read(classroomCreateProvider).selectedCalendarDate,
+                );
+                Navigator.pop(context);
+              },
+            );
+          },
         ),
 
         ///수업 시작 시간
@@ -138,7 +171,7 @@ class CreateScheduleStep extends ConsumerWidget {
           value: formatTime(classroomCreateState.startTime),
           iconPath: 'assets/icons/time_outline.svg',
           onTap: () {
-            CommonBottomSheet.show(
+            CommonBottomSheet.showClose(
               context,
               title: '수업 시작 시간',
               content: _TimePickerContent(
@@ -149,14 +182,11 @@ class CreateScheduleStep extends ConsumerWidget {
               ),
               buttonText: '선택',
               onButtonTap: () {
-                ref.
-                read(classroomCreateProvider.notifier)
+                ref
+                    .read(classroomCreateProvider.notifier)
                     .setStartTime(
-                  TimeOfDay(
-                    hour: tempHour.value,
-                    minute: tempMinute.value,
-                  ),
-                );
+                      TimeOfDay(hour: tempHour.value, minute: tempMinute.value),
+                    );
                 Navigator.pop(context);
               },
             );
@@ -274,7 +304,7 @@ class _DateTimeField extends StatelessWidget {
               Expanded(
                 child: Text(
                   value,
-                  style: TextTypes.title3SB(color: Palette.textTertiary),
+                  style: TextTypes.title4SB(color: Palette.textSecondary),
                 ),
               ),
 
@@ -294,6 +324,7 @@ class _DateTimeField extends StatelessWidget {
     );
   }
 }
+
 class _TimePickerContent extends StatelessWidget {
   final int initialHour;
   final int initialMinute;
@@ -302,7 +333,6 @@ class _TimePickerContent extends StatelessWidget {
   final ValueNotifier<int> minuteNotifier;
 
   const _TimePickerContent({
-    super.key,
     required this.initialHour,
     required this.initialMinute,
     required this.hourNotifier,
@@ -315,6 +345,21 @@ class _TimePickerContent extends StatelessWidget {
       height: 180,
       child: Stack(
         children: [
+          /// 선택 영역
+          IgnorePointer(
+            child: Center(
+              child: Container(
+                height: 44,
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: BoxDecoration(
+                  color: Palette.bgBase,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+          ),
+
+          /// Picker
           Row(
             children: [
               Expanded(
@@ -331,9 +376,10 @@ class _TimePickerContent extends StatelessWidget {
                   },
                   children: List.generate(
                     24,
-                        (index) => Center(
+                    (index) => Center(
                       child: Text(
                         index.toString().padLeft(2, '0'),
+                        style: TextTypes.title3SB(color: Palette.textPrimary),
                       ),
                     ),
                   ),
@@ -354,37 +400,16 @@ class _TimePickerContent extends StatelessWidget {
                   },
                   children: List.generate(
                     60,
-                        (index) => Center(
+                    (index) => Center(
                       child: Text(
                         index.toString().padLeft(2, '0'),
+                        style: TextTypes.title3SB(color: Palette.textPrimary),
                       ),
                     ),
                   ),
                 ),
               ),
             ],
-          ),
-
-          /// 선택 영역 (가운데 끊김 없이 하나로)
-          IgnorePointer(
-            child: Center(
-              child: Container(
-                height: 44,
-                margin: const EdgeInsets.symmetric(horizontal: 16),
-                decoration: BoxDecoration(
-                  color: Palette.bgBase,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border(
-                    top: BorderSide(
-                      color: Palette.borderDefault,
-                    ),
-                    bottom: BorderSide(
-                      color: Palette.borderDefault,
-                    ),
-                  ),
-                ),
-              ),
-            ),
           ),
         ],
       ),

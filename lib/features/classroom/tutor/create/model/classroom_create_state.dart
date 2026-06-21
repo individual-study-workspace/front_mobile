@@ -47,9 +47,13 @@ extension BillingTypeExtension on BillingType {
 }
 
 String formatDate(DateTime date) {
+  return '${date.year}.${date.month.toString().padLeft(2, '0')}.${date.day.toString().padLeft(2, '0')}';
+}
+
+String formatDateWithWeek(DateTime date) {
   const weekdays = ['월', '화', '수', '목', '금', '토', '일'];
 
-  return '${date.year}.${date.month.toString().padLeft(2, '0')}.${date.day.toString().padLeft(2, '0')} (${weekdays[date.weekday - 1]})';
+  return '${formatDate(date)} (${weekdays[date.weekday - 1]})';
 }
 
 String formatTime(TimeOfDay date) {
@@ -94,6 +98,8 @@ class ClassroomCreateState {
   final ScheduleType? scheduleType;
   final List<ClassDays> selectedDays;
   final DateTime startDay;
+  final DateTime currentCalendarDate;
+  final DateTime selectedCalendarDate;
   final TimeOfDay startTime;
   final int? totalLessons;
 
@@ -104,6 +110,10 @@ class ClassroomCreateState {
   final int? monthlyLessonFee;
   final int? perLessonFee;
   final int? perLessonCount;
+  final bool hasInput;
+
+  ///confirm
+  final String? inviteCode;
 
   ClassroomCreateState({
     this.step = ClassroomCreateStep.basicInfo,
@@ -115,6 +125,8 @@ class ClassroomCreateState {
     this.scheduleType = ScheduleType.weekly,
     this.selectedDays = const [],
     DateTime? startDay,
+    DateTime? currentCalendarDate,
+    DateTime? selectedCalendarDate,
     TimeOfDay? startTime,
     this.totalLessons,
 
@@ -124,20 +136,25 @@ class ClassroomCreateState {
     this.monthlyLessonFee,
     this.perLessonFee,
     this.perLessonCount,
+    this.hasInput = false,
+
+    this.inviteCode = "TEST", // 나중에 API 붙이면 지울것
   }) : startDay = startDay ?? DateTime.now(),
        startTime = startTime ?? TimeOfDay.now(),
-       billingDate = billingDate ?? DateTime.now().day;
+       billingDate = billingDate ?? DateTime.now().day,
+       selectedCalendarDate = selectedCalendarDate ?? DateTime.now(),
+       currentCalendarDate = currentCalendarDate ?? DateTime.now();
 
   bool get canProceed {
     switch (step) {
       case ClassroomCreateStep.basicInfo:
         return title.trim().isNotEmpty && lessonType != null;
 
+      ///scheduleType != null &&
+      ///startDay != null &&
+      ///startTime != null 필수라서 불필요
       case ClassroomCreateStep.schedule:
-        return scheduleType != null &&
-            startDay != null &&
-            startTime != null &&
-            totalLessons != null;
+        return totalLessons != null;
 
       case ClassroomCreateStep.payment:
         return billingType == BillingType.monthly &&
@@ -165,6 +182,8 @@ class ClassroomCreateState {
     DateTime? startDay,
     TimeOfDay? startTime,
     int? totalLessons,
+    DateTime? selectedCalendarDate,
+    DateTime? currentCalendarDate,
 
     BillingType? billingType,
     int? lessonFee,
@@ -172,6 +191,7 @@ class ClassroomCreateState {
     int? monthlyLessonFee,
     int? perLessonFee,
     int? perLessonCount,
+    bool? hasInput,
   }) {
     return ClassroomCreateState(
       step: step ?? this.step,
@@ -185,6 +205,8 @@ class ClassroomCreateState {
       startDay: startDay ?? this.startDay,
       startTime: startTime ?? this.startTime,
       totalLessons: totalLessons ?? this.totalLessons,
+      selectedCalendarDate: selectedCalendarDate ?? this.selectedCalendarDate,
+      currentCalendarDate: currentCalendarDate ?? this.currentCalendarDate,
 
       billingType: billingType ?? this.billingType,
       lessonFee: lessonFee ?? this.lessonFee,
@@ -192,6 +214,7 @@ class ClassroomCreateState {
       monthlyLessonFee: monthlyLessonFee ?? this.monthlyLessonFee,
       perLessonFee: perLessonFee ?? this.perLessonFee,
       perLessonCount: perLessonCount ?? this.perLessonCount,
+      hasInput: hasInput ?? this.hasInput,
     );
   }
 }

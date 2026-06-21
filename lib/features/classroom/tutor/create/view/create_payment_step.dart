@@ -161,7 +161,7 @@ class CreatePaymentStep extends ConsumerWidget {
               onTap: () {
                 final tempDay = ValueNotifier(classroomCreateState.billingDate);
 
-                CommonBottomSheet.show(
+                CommonBottomSheet.showClose(
                   context,
                   title: '정기 청구일',
                   content: _DayPickerContent(dayNotifier: tempDay),
@@ -191,7 +191,7 @@ class CreatePaymentStep extends ConsumerWidget {
                       Expanded(
                         child: Text(
                           '매달 ${classroomCreateState.billingDate}일',
-                          style: TextTypes.title3SB(
+                          style: TextTypes.title4SB(
                             color: Palette.textSecondary,
                           ),
                         ),
@@ -387,109 +387,96 @@ class _BillingType extends StatelessWidget {
 class _DayPickerContent extends StatelessWidget {
   final ValueNotifier<int> dayNotifier;
 
-  const _DayPickerContent({
-    super.key,
-    required this.dayNotifier,
-  });
+  const _DayPickerContent({required this.dayNotifier});
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         ValueListenableBuilder<int>(
           valueListenable: dayNotifier,
           builder: (context, selectedDay, _) {
-            return Text(
-              '$selectedDay일 / 말일',
-              style: TextTypes.caption1(
-                color: Palette.textTertiary,
-              ),
-            );
-          },
-        ),
-
-        const SizedBox(height: 12),
-
-        SizedBox(
-          height: 180,
-          child: ValueListenableBuilder<int>(
-            valueListenable: dayNotifier,
-            builder: (context, selectedDay, _) {
-              return Stack(
-                children: [
-                  ListWheelScrollView.useDelegate(
-                    itemExtent: 44,
-                    physics: const FixedExtentScrollPhysics(),
-                    controller: FixedExtentScrollController(
-                      initialItem: selectedDay - 1,
-                    ),
-                    onSelectedItemChanged: (index) {
-                      dayNotifier.value = index + 1;
-                    },
-                    childDelegate: ListWheelChildBuilderDelegate(
-                      childCount: 32,
-                      builder: (context, index) {
-                        final day = index + 1;
-                        final isSelected = selectedDay == day;
-
-                        return Center(
-                          child: Text(
-                            index == 31 ? '말일' : '${day}일',
-                            style: TextTypes.title3SB(
-                              color: isSelected
-                                  ? Palette.textPrimary
-                                  : Palette.textTertiary,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-
-                  /// 선택 영역
-                  IgnorePointer(
-                    child: Center(
-                      child: Container(
-                        height: 44,
-                        margin: const EdgeInsets.symmetric(horizontal: 16),
-                        decoration: BoxDecoration(
-                          border: Border(
-                            top: BorderSide(
-                              color: Palette.borderDefault,
-                            ),
-                            bottom: BorderSide(
-                              color: Palette.borderDefault,
+            return Column(
+              children: [
+                SizedBox(
+                  height: 180,
+                  child: Stack(
+                    children: [
+                      /// 선택 영역
+                      IgnorePointer(
+                        child: Center(
+                          child: Container(
+                            height: 36,
+                            decoration: BoxDecoration(
+                              color: Palette.bgBase,
+                              borderRadius: BorderRadius.circular(8),
                             ),
                           ),
                         ),
                       ),
-                    ),
+
+                      ListWheelScrollView.useDelegate(
+                        itemExtent: 44,
+                        physics: const FixedExtentScrollPhysics(),
+                        controller: FixedExtentScrollController(
+                          initialItem: selectedDay - 1,
+                        ),
+                        onSelectedItemChanged: (index) {
+                          dayNotifier.value = index + 1;
+                        },
+                        childDelegate: ListWheelChildBuilderDelegate(
+                          childCount: 31,
+                          builder: (context, index) {
+                            final day = index + 1;
+                            final isSelected = selectedDay == day;
+
+                            return Center(
+                              child: Text(
+                                '$day일',
+                                style: TextTypes.title3SB(
+                                  color: isSelected
+                                      ? Palette.textPrimary
+                                      : Palette.textTertiary,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              );
-            },
-          ),
-        ),
-
-        const SizedBox(height: 12),
-
-        Row(
-          children: [
-            Icon(
-              Icons.info,
-              size: 16,
-              color: Palette.primary,
-            ),
-            const SizedBox(width: 4),
-            Expanded(
-              child: Text(
-                '해당 날짜가 없는 달은 말일에 청구됩니다.',
-                style: TextTypes.caption2(
-                  color: Palette.primary,
                 ),
-              ),
-            ),
-          ],
+                SizedBox(
+                  height: 25,
+                  child: selectedDay >= 29
+                      ? Row(
+                          children: [
+                            SvgPicture.asset(
+                              'assets/icons/info_filled.svg',
+                              width: 16,
+                              height: 16,
+                              colorFilter: ColorFilter.mode(
+                                Palette.blue600,
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            Expanded(
+                              child: Text(
+                                '해당 날짜가 없는 달은, 그 달의 마지막 날에 청구됩니다.',
+                                style: TextTypes.caption2(
+                                  color: Palette.blue600,
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      : null,
+                ),
+              ],
+            );
+          },
         ),
       ],
     );
