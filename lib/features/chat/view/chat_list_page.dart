@@ -19,6 +19,7 @@ class ChatListPage extends StatelessWidget {
         padding: EdgeInsets.all(16),
         child: Column(
           children: [
+            // 검색 창
             TextInput(
               size: TextInputSize.small,
               hintText: '튜터 또는 강의실명을 검색해보세요',
@@ -34,6 +35,7 @@ class ChatListPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 16),
+            // api 연동 시 map으로 반복문 돌려서 뿌림
             ChatListCard(),
           ],
         ),
