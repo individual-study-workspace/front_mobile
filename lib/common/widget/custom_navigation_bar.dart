@@ -14,6 +14,7 @@ class CustomNavigationBar extends StatelessWidget {
     this.chatCount = 0,
   });
 
+  // 네비게이션 텍스트 및 아이콘 경로
   static const List<_NavItem> items = [
     _NavItem(
       label: '홈',
@@ -66,6 +67,7 @@ class CustomNavigationBar extends StatelessWidget {
                     Stack(
                       clipBehavior: Clip.none,
                       children: [
+                        // 아이콘
                         SvgPicture.asset(
                           selected ? item.activeIcon : item.inactiveIcon,
                           width: 24,
@@ -94,6 +96,7 @@ class CustomNavigationBar extends StatelessWidget {
                                 shape: BoxShape.circle,
                               ),
                               alignment: Alignment.center,
+                              // 읽지 않은 채팅 수 표시 영역
                               child: Text(
                                 chatCount > 99 ? '99+' : '$chatCount',
                                 style: TextTypes.caption2(
@@ -105,6 +108,7 @@ class CustomNavigationBar extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 3),
+                    // 하단 텍스트
                     Text(
                       item.label,
                       style: TextTypes.caption2(
