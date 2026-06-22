@@ -179,9 +179,12 @@ class CommonCalendar extends StatelessWidget {
         calendarType == CommonCalendarType.select &&
         targetDate.isBefore(todayOnly);
 
-    final isSelected = !isPastDate && _isSameDate(date, selectedDate);
+    final isSelected = _isSameDate(date, selectedDate);
+    final showDot = calendarType == CommonCalendarType.select && isSelected;
 
     Color textColor = Palette.textPrimary;
+    Color backgroundColor;
+    Color selectedTextColor = Palette.textPrimary;
 
     if (isPastDate) {
       textColor = Palette.textDisabled;
@@ -191,6 +194,18 @@ class CommonCalendar extends StatelessWidget {
       textColor = Palette.blue600;
     }
 
+    if (isSelected) {
+      backgroundColor = calendarType == CommonCalendarType.select
+          ? Palette
+                .primarySoft // select 모드
+          : Palette.primary; // non-select 모드
+      selectedTextColor = calendarType == CommonCalendarType.select
+          ? Palette.textPrimary
+          : Palette.textPrimaryInverse;
+    } else {
+      backgroundColor = Colors.transparent;
+      selectedTextColor = textColor;
+    }
     return GestureDetector(
       onTap: isPastDate ? null : () => onDateSelected(date),
       child: SizedBox(
@@ -204,25 +219,18 @@ class CommonCalendar extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 6),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: isSelected ? Palette.primary : Colors.transparent,
+                color: backgroundColor,
               ),
               child: Text(
                 '${date.day}',
-                style: isSelected
-                    ? TextTypes.title1B(color: Palette.textPrimaryInverse)
-                    : TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w400,
-                        height: 1,
-                        letterSpacing: -1,
-                        color: textColor,
-                      ),
+                style: TextTypes.title1B(color: selectedTextColor),
               ),
             ),
             SizedBox(
               height: 6,
-              child:
-                  dateIndicatorBuilder?.call(date) ?? const SizedBox.shrink(),
+              child: showDot
+                  ? (dateIndicatorBuilder?.call(date) ?? _defaultDot())
+                  : const SizedBox.shrink(),
             ),
           ],
         ),
@@ -276,4 +284,12 @@ class CommonCalendar extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget _defaultDot() {
+  return Container(
+    width: 4,
+    height: 4,
+    decoration: BoxDecoration(color: Palette.primary, shape: BoxShape.circle),
+  );
 }
