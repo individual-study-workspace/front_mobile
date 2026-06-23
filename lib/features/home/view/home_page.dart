@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:front_mobile/common/theme.dart';
-
 import '../../../common/model/schedule.dart';
 import '../../../common/widget/common_calendar.dart';
 import '../provider/home_provider.dart';
