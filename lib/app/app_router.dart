@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front_mobile/app/route_path.dart';
 import 'package:front_mobile/features/auth/view/profile_setup_page.dart';
 import 'package:front_mobile/features/auth/view/terms_agreement_page.dart';
+import 'package:front_mobile/features/chat/view/chat_list_page.dart';
 import 'package:go_router/go_router.dart';
 
 final goRouterProvider = Provider<GoRouter>((ref) {
@@ -16,6 +17,10 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: RoutePath.profileSetup,
         builder: (_, __) => const ProfileSetupPage(),
+      ),
+      GoRoute(
+        path: RoutePath.chatList,
+        builder: (_, __) => const ChatListPage(),
       ),
     ],
   );
