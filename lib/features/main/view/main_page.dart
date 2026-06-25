@@ -45,8 +45,8 @@ int _getCurrentIndex(BuildContext context) {
 
   ///home 제외하고 나중에 수정 필요
   if (location.startsWith(RoutePath.home)) return 0;
-  if (location.startsWith(RoutePath.test)) return 1;
-  if (location.startsWith(RoutePath.test)) return 2;
+  if (location.startsWith(RoutePath.classroomCreate)) return 1;
+  if (location.startsWith(RoutePath.chatList)) return 2;
   if (location.startsWith(RoutePath.test)) return 3;
   if (location.startsWith(RoutePath.test)) return 4;
 
