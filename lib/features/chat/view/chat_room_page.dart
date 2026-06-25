@@ -1,9 +1,10 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:front_mobile/common/theme.dart';
 import 'package:front_mobile/common/widget/sub_app_bar.dart';
+import 'package:front_mobile/features/chat/model/chat_message.dart';
+import 'package:front_mobile/features/chat/provider/chat_room_provider.dart';
+import 'package:front_mobile/features/chat/view/widget/chat_bubble.dart';
 
 class ChatRoomPage extends StatelessWidget {
   const ChatRoomPage({super.key});
@@ -13,56 +14,8 @@ class ChatRoomPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<ChatMessage> messages = [
-      ChatMessage(
-        id: 1,
-        message: '안녕하세요!',
-        time: '오후 2:10',
-        isMe: false,
-        sentAt: DateTime(2025, 6, 18),
-        sender: '홍길동',
-      ),
-      ChatMessage(
-        id: 2,
-        message: '네 안녕하세요 선생님!',
-        time: '오후 2:11',
-        isMe: true,
-        sentAt: DateTime(2025, 6, 18),
-        sender: '나',
-      ),
-      ChatMessage(
-        id: 3,
-        message: '이번주 숙제는 part 3까지 풀어오면 됩니다.',
-        time: '오후 2:12',
-        isMe: false,
-        sentAt: DateTime(2025, 6, 19),
-        sender: '홍길동',
-      ),
-      ChatMessage(
-        id: 4,
-        message: '넵넵',
-        time: '오후 2:13',
-        isMe: true,
-        sentAt: DateTime(2025, 6, 19),
-        sender: '나',
-      ),
-      ChatMessage(
-        id: 5,
-        message: '확인했습니다!',
-        time: '오후 2:13',
-        isMe: true,
-        sentAt: DateTime(2025, 6, 19),
-        sender: '나',
-      ),
-      ChatMessage(
-        id: 6,
-        message: '오늘 수업 어떠셨나요?',
-        time: '오후 3:00',
-        isMe: false,
-        sentAt: DateTime(2025, 6, 20),
-        sender: '홍길동',
-      ),
-    ];
+    // riverpod 연동 시 → ref.watch(chatRoomProvider)로 교체
+    final List<ChatMessage> messages = mockMessages;
 
     return Scaffold(
       appBar: SubAppBar(title: '홍길동'), // api 연동 시 닉네임으로 변경 필요
@@ -235,148 +188,6 @@ class _DateDivider extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-// 채팅 메세지 모델
-class ChatMessage {
-  final int id;
-  final String message;
-  final String time;
-  final bool isMe;
-  final DateTime sentAt;
-  final String sender;
-
-  ChatMessage({
-    required this.id,
-    required this.message,
-    required this.time,
-    required this.isMe,
-    required this.sentAt,
-    required this.sender,
-  });
-}
-
-// 채팅
-class ChatBubble extends StatelessWidget {
-  final ChatMessage message;
-  final bool showSender;
-  final bool showTime;
-  final double bottomPadding;
-
-  const ChatBubble({
-    super.key,
-    required this.message,
-    required this.showSender,
-    required this.showTime,
-    required this.bottomPadding,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: message.isMe ? Alignment.centerRight : Alignment.centerLeft,
-      child: Padding(
-        // 채팅 간의 간격
-        padding: EdgeInsets.only(bottom: bottomPadding),
-        child: Column(
-          crossAxisAlignment: message.isMe
-              ? CrossAxisAlignment.end
-              : CrossAxisAlignment.start,
-          children: [
-            // 상대방 닉네임 (발신자 바뀔 때만)
-            if (!message.isMe && showSender)
-              Row(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Palette.bgSoft,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(4),
-                      child: SvgPicture.asset(
-                        'assets/icons/user_outline.svg',
-                        width: 24,
-                        height: 24,
-                        colorFilter: ColorFilter.mode(
-                          Palette.iconSecondary,
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 12),
-                  Text(
-                    message.sender,
-                    style: TextTypes.caption1(color: Palette.textPrimary),
-                  ),
-                  SizedBox(width: 4),
-                  Badge(), // 강의실 공통 뱃지로 변경 필요
-                ],
-              ),
-            Padding(
-              padding: const EdgeInsets.only(left: 40),
-              child: Row(
-                mainAxisAlignment: message.isMe
-                    ? MainAxisAlignment.end
-                    : MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  // 내 메세지 시간 표기
-                  if (message.isMe && showTime)
-                    Padding(
-                      padding: const EdgeInsets.only(right: 4),
-                      child: Text(
-                        message.time,
-                        style: TextTypes.caption2(color: Palette.textTertiary),
-                      ),
-                    ),
-                  Flexible(
-                    child: Container(
-                      constraints: BoxConstraints(
-                        maxWidth: MediaQuery.of(context).size.width * 0.68,
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 14,
-                        vertical: 10,
-                      ),
-                      decoration: BoxDecoration(
-                        color: message.isMe ? Palette.primary : Palette.bgBase,
-                        borderRadius: BorderRadius.only(
-                          // 내 메세지와 타인메세지의 뾰족한 부분 구분
-                          topLeft: Radius.circular(message.isMe ? 12 : 2),
-                          topRight: Radius.circular(message.isMe ? 2 : 12),
-                          bottomLeft: Radius.circular(12),
-                          bottomRight: Radius.circular(12),
-                        ),
-                      ),
-                      child: Text(
-                        message.message,
-                        style: TextTypes.body2M(
-                          color: message.isMe
-                              ? Palette.textPrimaryInverse
-                              : Palette.textPrimary,
-                        ),
-                      ),
-                    ),
-                  ),
-                  // 타인 메세지 시간 표기
-                  if (!message.isMe && showTime)
-                    Padding(
-                      padding: const EdgeInsets.only(left: 4),
-                      child: Text(
-                        message.time,
-                        style: TextTypes.caption2(color: Palette.textTertiary),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
