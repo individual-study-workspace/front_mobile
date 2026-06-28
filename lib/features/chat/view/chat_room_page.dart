@@ -5,6 +5,7 @@ import 'package:front_mobile/common/widget/sub_app_bar.dart';
 import 'package:front_mobile/features/chat/model/chat_message.dart';
 import 'package:front_mobile/features/chat/provider/chat_room_provider.dart';
 import 'package:front_mobile/features/chat/view/widget/chat_bubble.dart';
+import 'package:front_mobile/features/chat/view/widget/chat_file_bubble.dart';
 
 class ChatRoomPage extends StatelessWidget {
   const ChatRoomPage({super.key});
@@ -82,12 +83,19 @@ class ChatRoomPage extends StatelessWidget {
                 return Column(
                   children: [
                     if (showDivider) _DateDivider(date: item.sentAt),
-                    ChatBubble(
-                      message: item,
-                      showSender: showSender,
-                      showTime: showTime,
-                      bottomPadding: bottomPadding,
-                    ),
+                    item.type == "chat"
+                        ? ChatBubble(
+                            message: item,
+                            showSender: showSender,
+                            showTime: showTime,
+                            bottomPadding: bottomPadding,
+                          )
+                        : ChatFileBubble(
+                            message: item,
+                            showSender: showSender,
+                            showTime: showTime,
+                            bottomPadding: bottomPadding,
+                          ),
                   ],
                 );
               },

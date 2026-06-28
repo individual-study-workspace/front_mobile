@@ -9,6 +9,7 @@ List<ChatMessage> mockMessages = [
     isMe: false,
     sentAt: DateTime(2025, 6, 18),
     sender: '홍길동',
+    type: "chat",
   ),
   ChatMessage(
     id: 2,
@@ -17,6 +18,7 @@ List<ChatMessage> mockMessages = [
     isMe: true,
     sentAt: DateTime(2025, 6, 18),
     sender: '나',
+    type: "chat",
   ),
   ChatMessage(
     id: 3,
@@ -25,6 +27,7 @@ List<ChatMessage> mockMessages = [
     isMe: false,
     sentAt: DateTime(2025, 6, 19),
     sender: '홍길동',
+    type: "chat",
   ),
   ChatMessage(
     id: 4,
@@ -33,6 +36,7 @@ List<ChatMessage> mockMessages = [
     isMe: true,
     sentAt: DateTime(2025, 6, 19),
     sender: '나',
+    type: "chat",
   ),
   ChatMessage(
     id: 5,
@@ -41,14 +45,40 @@ List<ChatMessage> mockMessages = [
     isMe: true,
     sentAt: DateTime(2025, 6, 19),
     sender: '나',
+    type: "chat",
   ),
   ChatMessage(
     id: 6,
+    message: '',
+    time: '오후 2:30',
+    isMe: true,
+    sentAt: DateTime(2025, 6, 20),
+    sender: '나',
+    type: "file",
+    volume: 2,
+    isDownloaded: false,
+    fileName: '폴더 이름.zip',
+  ),
+  ChatMessage(
+    id: 7,
     message: '오늘 수업 어떠셨나요?',
     time: '오후 3:00',
     isMe: false,
     sentAt: DateTime(2025, 6, 20),
     sender: '홍길동',
+    type: "chat",
+  ),
+  ChatMessage(
+    id: 8,
+    message: '',
+    time: '오후 4:30',
+    isMe: false,
+    sentAt: DateTime(2025, 6, 20),
+    sender: '홍길동',
+    type: "file",
+    volume: 12,
+    isDownloaded: true,
+    fileName: '폴더 이름.zip',
   ),
 ];
 
@@ -74,6 +104,7 @@ class ChatRoomNotifier extends Notifier<List<ChatMessage>> {
         isMe: true,
         sentAt: DateTime.now(),
         sender: '나',
+        type: 'chat',
       ),
     ];
   }
