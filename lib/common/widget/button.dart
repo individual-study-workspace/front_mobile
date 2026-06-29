@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:front_mobile/common/theme.dart';
 
 class PrimaryLargeButton extends StatelessWidget {
-  final String content;
+  final String? content;
+  final Widget Function(Color textColor)? contentBuilder;
   final VoidCallback? onPressed;
   final bool isEnabled;
 
   const PrimaryLargeButton({
     super.key,
-    required this.content,
+    this.content,
+    this.contentBuilder,
     this.onPressed,
     this.isEnabled = true,
   });
@@ -30,8 +32,6 @@ class PrimaryLargeButton extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-            minimumSize: Size.zero,
           ).copyWith(
             overlayColor: WidgetStateProperty.resolveWith<Color?>((states) {
               if (isEnabled && states.contains(WidgetState.pressed)) {
@@ -43,7 +43,18 @@ class PrimaryLargeButton extends StatelessWidget {
               return 0;
             }),
           ),
-      child: Text(content, style: TextStyle(color: textColor)),
+      child: contentBuilder != null
+          ? Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+              child: contentBuilder!(textColor),
+            )
+          : Padding(
+              padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 24),
+              child: Text(
+                content!,
+                style: TextTypes.title3SB(color: textColor),
+              ),
+            ),
     );
   }
 }
@@ -194,24 +205,25 @@ class SecondaryLargeButton extends StatelessWidget {
 }
 
 class SecondaryMediumButton extends StatelessWidget {
-  final String content;
+  final String? content;
+  final Widget Function(Color textColor)? contentBuilder;
   final VoidCallback? onPressed;
   final bool isEnabled;
 
   const SecondaryMediumButton({
     super.key,
-    required this.content,
+    this.content,
+    this.contentBuilder,
     this.onPressed,
     this.isEnabled = true,
   });
 
   @override
   Widget build(BuildContext context) {
-    final Color borderColor = isEnabled
-        ? Palette.violet500
-        : Palette.borderDefault;
     final Color backgroundColor = isEnabled ? Palette.gray0 : Palette.bgBase;
-    final Color textColor = isEnabled ? Palette.gray90 : Palette.textDisabled;
+    final Color textColor = isEnabled
+        ? Palette.textPrimary
+        : Palette.textDisabled;
 
     return ElevatedButton(
       onPressed: () {
@@ -225,9 +237,7 @@ class SecondaryMediumButton extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(6),
             ),
-            padding: const EdgeInsets.symmetric(vertical: 9.5, horizontal: 20),
             minimumSize: Size.zero,
-            side: BorderSide(color: borderColor, width: 1),
           ).copyWith(
             overlayColor: WidgetStateProperty.resolveWith<Color?>((states) {
               if (isEnabled && states.contains(WidgetState.pressed)) {
@@ -235,11 +245,25 @@ class SecondaryMediumButton extends StatelessWidget {
               }
               return Colors.transparent;
             }),
+            side: WidgetStateProperty.resolveWith<BorderSide>((states) {
+              if (!isEnabled) {
+                return const BorderSide(color: Palette.borderDefault, width: 1);
+              }
+              if (states.contains(WidgetState.pressed)) {
+                return const BorderSide(color: Palette.violet700, width: 1);
+              }
+              return const BorderSide(color: Palette.violet500, width: 1);
+            }),
             elevation: WidgetStateProperty.resolveWith<double>((states) {
               return 0;
             }),
           ),
-      child: Text(content, style: TextStyle(color: textColor)),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        child:
+            contentBuilder?.call(textColor) ??
+            Text(content!, style: TextTypes.title4M(color: textColor)),
+      ),
     );
   }
 }

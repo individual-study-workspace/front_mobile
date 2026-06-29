@@ -4,4 +4,6 @@ abstract class RoutePath {
   static const profileSetup = '/profileSetup';
   static const classroomCreate = '/classroomCreate';
   static const chatList = '/chatList';
+  static const emptyClass = '/emptyClass';
+  static const classMain = '/classMain';
 }
