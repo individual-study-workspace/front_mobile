@@ -1,62 +1,69 @@
 import 'package:flutter/material.dart';
-import 'package:front_mobile/common/widget/button.dart';
-import 'package:front_mobile/common/widget/main_app_bar.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front_mobile/common/theme.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:front_mobile/common/widget/main_app_bar.dart';
+import 'package:front_mobile/common/widget/tab_menu.dart';
 
-class ClassMainPage extends StatelessWidget {
+import '../provider/class_main_provider.dart';
+import 'dashboard_body.dart';
+
+class ClassMainPage extends ConsumerStatefulWidget {
   const ClassMainPage({super.key});
 
   @override
+  ConsumerState<ClassMainPage> createState() => _ClassMainPage();
+}
+
+class _ClassMainPage extends ConsumerState<ClassMainPage> {
+  late final PageController pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    pageController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final state = ref.watch(classMainProvider);
+    final provider = ref.read(classMainProvider.notifier);
+
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(56),
-        child: const MainAppBar(title: '강의실'),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(56),
+        child: MainAppBar(title: '드롭다운'),
       ),
-      body: SafeArea(
+      body: Container(
+        color: Palette.bgBase,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-              child: Column(
-                children: [
-                  Container(
-                    width: 64,
-                    height: 64,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Palette.violet50,
-                    ),
-                    child: Center(
-                      child: SvgPicture.asset(
-                        'assets/icons/book_outline.svg',
-                        width: 40,
-                        height: 40,
-                        fit: BoxFit.contain,
-                        colorFilter: ColorFilter.mode(
-                          Palette.violet600,
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    '아직 개설된 강의실이 없어요',
-                    style: TextTypes.title1B(color: Palette.textSecondary),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    '강의를 개설하면 수업, 과제, 할 일을\n이 곳에서 확인할 수 있어요.',
-                    textAlign: TextAlign.center,
-                    style: TextTypes.body2M(color: Palette.textTertiary),
-                  ),
-                  SizedBox(height: 32),
-                  PrimaryLargeButton(content: "새 강의실 개설하기"),
+            TabMenu(
+              tabs: const ['대시보드', '커리큘럼', '과제함'],
+              selectedIndex: state.selectedTabIndex,
+              onTap: (index) {
+                provider.changeTab(index);
+
+                pageController.animateToPage(
+                  index,
+                  duration: const Duration(milliseconds: 250),
+                  curve: Curves.ease,
+                );
+              },
+            ),
+            Expanded(
+              child: PageView(
+                controller: pageController,
+                onPageChanged: provider.changeTab,
+                children: const [
+                  DashboardBody(),
+                  SizedBox.shrink(),
+                  SizedBox.shrink(),
                 ],
               ),
             ),

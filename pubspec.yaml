@@ -40,6 +40,7 @@ dependencies:
   flutter_svg: ^2.2.3
   intl: ^0.20.2
   go_router: ^17.2.4
+  dotted_border: ^2.1.0
 
 dev_dependencies:
   flutter_test:
@@ -53,7 +54,6 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   riverpod_generator: ^4.0.3
   build_runner: ^2.15.0
-  dotted_border: ^2.1.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -79,6 +79,7 @@ flutter:
     - assets/icons/certified_outline.svg
     - assets/icons/chat_filled.svg
     - assets/icons/chat_outline.svg
+    - assets/icons/checks_outline.svg
     - assets/icons/class_filled.svg
     - assets/icons/class_outline.svg
     - assets/icons/close_outline.svg

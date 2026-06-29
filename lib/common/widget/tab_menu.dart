@@ -42,7 +42,7 @@ class TabMenu extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        height: 2,
+                        height: 3,
                         width: double.infinity,
                         color: selectedIndex == index
                             ? Palette.primaryVariant
