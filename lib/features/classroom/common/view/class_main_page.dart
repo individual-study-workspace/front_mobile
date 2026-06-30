@@ -60,8 +60,11 @@ class _ClassMainPage extends ConsumerState<ClassMainPage> {
               child: PageView(
                 controller: pageController,
                 onPageChanged: provider.changeTab,
-                children: const [
-                  DashboardBody(),
+                children: [
+                  DashboardBody(
+                    userType: state.userType,
+                    assignments: state.assignments,
+                  ),
                   SizedBox.shrink(),
                   SizedBox.shrink(),
                 ],

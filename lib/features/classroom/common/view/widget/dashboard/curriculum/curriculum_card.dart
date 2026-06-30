@@ -1,9 +1,8 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../../common/theme.dart';
-import '../../../../../common/widget/button.dart';
+import '../../../../../../../common/theme.dart';
+import '../../../../../../../common/widget/button.dart';
 
 class CurriculumCard extends StatelessWidget {
   final VoidCallback? onPressed;

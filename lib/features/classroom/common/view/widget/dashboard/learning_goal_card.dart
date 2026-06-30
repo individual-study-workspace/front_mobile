@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../../../../common/theme.dart';
+import '../../../../../../common/theme.dart';
 
 class LearningGoalCard extends StatelessWidget {
   final String? learningGoal;
