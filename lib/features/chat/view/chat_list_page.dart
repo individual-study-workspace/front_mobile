@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:front_mobile/common/theme.dart';
 import 'package:front_mobile/common/widget/common_search_bar.dart';
 import 'package:front_mobile/common/widget/main_app_bar.dart';
-import 'package:front_mobile/common/widget/text_input.dart';
 import 'package:front_mobile/features/chat/view/chat_list_card.dart';
 
 class ChatListPage extends StatelessWidget {
