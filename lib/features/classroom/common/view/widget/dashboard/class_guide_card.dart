@@ -1,8 +1,7 @@
-
 import 'package:flutter/cupertino.dart';
 
-import '../../../../../common/theme.dart';
-import '../../../../../common/widget/button.dart';
+import '../../../../../../common/theme.dart';
+import '../../../../../../common/widget/button.dart';
 
 class ClassGuideCard extends StatelessWidget {
   final VoidCallback? onPressed;
