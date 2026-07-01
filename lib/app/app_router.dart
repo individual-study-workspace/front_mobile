@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front_mobile/app/route_path.dart';
 import 'package:front_mobile/features/auth/view/profile_setup_page.dart';
 import 'package:front_mobile/features/auth/view/terms_agreement_page.dart';
+import 'package:front_mobile/features/resources/view/resources_page.dart';
 import 'package:front_mobile/features/test/view/test_page.dart';
 import 'package:go_router/go_router.dart';
 
@@ -13,7 +14,7 @@ import '../features/main/view/main_page.dart';
 final goRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     ///일단 이렇게 진행 이후에 home으로 변경
-    initialLocation: RoutePath.termsAgreement,
+    initialLocation: RoutePath.resources,
     routes: [
       // 인증 영역
       GoRoute(
@@ -39,6 +40,10 @@ final goRouterProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: RoutePath.chatList,
             builder: (_, __) => const ChatListPage(),
+          ),
+          GoRoute(
+            path: RoutePath.resources,
+            builder: (_, __) => const ResourcesPage(),
           ),
           GoRoute(path: RoutePath.test, builder: (_, __) => const TestPage()),
         ],

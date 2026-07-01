@@ -83,6 +83,10 @@ flutter:
     - assets/icons/close_outline.svg
     - assets/icons/copy_filled.svg
     - assets/icons/copy_outline.svg
+    - assets/icons/custom_file.svg
+    - assets/icons/custom_folder_cloud.svg
+    - assets/icons/custom_folder_file.svg
+    - assets/icons/custom_folder.svg
     - assets/icons/credit_card_filled.svg
     - assets/icons/credit_card_outline.svg
     - assets/icons/default_disable_toggle_false.svg
