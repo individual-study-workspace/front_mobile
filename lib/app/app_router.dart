@@ -36,8 +36,10 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             path: RoutePath.classroomCreate,
             builder: (_, __) => const ClassroomCreatePage(),
           ),
-          GoRoute(path: RoutePath.chatList, builder: (_, __) => const ChatListPage()),
-          GoRoute(path: RoutePath.test, builder: (_, __) => const TestPage()),
+          GoRoute(
+            path: RoutePath.chatList,
+            builder: (_, __) => const ChatListPage(),
+          ),
           GoRoute(path: RoutePath.test, builder: (_, __) => const TestPage()),
         ],
       ),
