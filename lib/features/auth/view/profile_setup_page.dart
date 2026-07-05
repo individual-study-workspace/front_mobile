@@ -6,7 +6,7 @@ import 'package:front_mobile/common/widget/sub_app_bar.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/route_path.dart';
-import '../../../common/widget/button.dart';
+import '../../../common/widget/button/button.dart';
 import '../../../common/widget/text_input.dart';
 import '../provider/sign_up_provider.dart';
 
@@ -236,7 +236,7 @@ class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> {
                 width: double.infinity,
                 height: 52,
 
-                child: PrimaryLargeButton(
+                child: PrimaryButton(
                   content: '시작하기',
                   isEnabled: signUpState.isUserProfileValid,
                   onPressed: signUpState.isUserProfileValid

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:front_mobile/common/theme.dart';
-
-import 'button.dart';
+import 'package:front_mobile/common/widget/button/button.dart';
+import 'package:front_mobile/common/widget/button/button_style.dart';
 
 class Modal extends StatelessWidget {
   final String title;
@@ -71,7 +71,8 @@ class Modal extends StatelessWidget {
                 Expanded(
                   child: SizedBox(
                     height: 40,
-                    child: SecondaryMediumButton(
+                    child: SecondaryButton(
+                      size: ButtonSize.medium,
                       content: leftText,
                       onPressed: onLeft,
                     ),
@@ -81,7 +82,8 @@ class Modal extends StatelessWidget {
                 Expanded(
                   child: SizedBox(
                     height: 40,
-                    child: PrimaryMediumButton(
+                    child: PrimaryButton(
+                      size: ButtonSize.medium,
                       content: rightText,
                       onPressed: onRight,
                     ),
