@@ -7,7 +7,7 @@ import 'package:front_mobile/features/classroom/tutor/create/view/confirm_step.d
 
 import '../../../../../common/widget/modal.dart';
 import '../../../../../common/widget/step_progress_bar.dart';
-import '../model/classroom_create_state.dart';
+import '../../../common/model/classroom_type.dart';
 import '../provider/classroom_create_provider.dart';
 import 'create_basic_info_step.dart';
 import 'create_payment_step.dart';
