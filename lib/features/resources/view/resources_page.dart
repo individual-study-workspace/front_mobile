@@ -1,24 +1,75 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:front_mobile/common/theme.dart';
 import 'package:front_mobile/common/widget/main_app_bar.dart';
+import 'package:front_mobile/features/resources/provider/resource_provider.dart';
+import 'package:front_mobile/features/resources/view/widget/resource_upload_menu_popup.dart';
 
-class ResourcesPage extends StatelessWidget {
+class ResourcesPage extends ConsumerWidget {
   const ResourcesPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(resourceProvider);
+    final provider = ref.read(resourceProvider.notifier);
+
     return Scaffold(
-      appBar: PreferredSize(
+      appBar: const PreferredSize(
         preferredSize: Size.fromHeight(52),
         child: MainAppBar(title: '자료실'),
       ),
+      floatingActionButton: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          if (state.isFabOpen) ...[
+            ResourceUploadMenuPopup(
+              onCreateFolder: () {
+                provider.closeFab();
+
+                // TODO: 폴더 만들기
+              },
+              onUploadFile: () {
+                provider.closeFab();
+
+                // TODO: 파일 업로드
+              },
+            ),
+            SizedBox(height: 12),
+          ],
+          SizedBox(
+            width: 48,
+            height: 48,
+            child: FloatingActionButton(
+              onPressed: provider.toggleFab,
+              backgroundColor: Palette.violet500,
+              foregroundColor: Colors.white,
+              shape: const CircleBorder(),
+              elevation: 4,
+              child: AnimatedRotation(
+                turns: state.isFabOpen ? 0.125 : 0,
+                duration: const Duration(milliseconds: 200),
+                child: SvgPicture.asset(
+                  'assets/icons/plus_outline.svg',
+                  width: 24,
+                  height: 24,
+                  colorFilter: const ColorFilter.mode(
+                    Palette.iconPrimaryInverse,
+                    BlendMode.srcIn,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
       body: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(8)),
                 gradient: LinearGradient(
@@ -34,7 +85,7 @@ class ResourcesPage extends StatelessWidget {
                     width: 48,
                     height: 48,
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -46,7 +97,7 @@ class ResourcesPage extends StatelessWidget {
                             color: Palette.textSecondary,
                           ),
                         ),
-                        SizedBox(height: 2),
+                        const SizedBox(height: 2),
                         Text.rich(
                           TextSpan(
                             children: [
@@ -65,7 +116,7 @@ class ResourcesPage extends StatelessWidget {
                             ],
                           ),
                         ),
-                        SizedBox(height: 4),
+                        const SizedBox(height: 4),
                         Row(
                           children: [
                             Expanded(
@@ -74,12 +125,12 @@ class ResourcesPage extends StatelessWidget {
                                 minHeight: 8,
                                 backgroundColor: Palette.primarySoft,
                                 borderRadius: BorderRadius.circular(999),
-                                valueColor: AlwaysStoppedAnimation<Color>(
+                                valueColor: const AlwaysStoppedAnimation<Color>(
                                   Palette.primaryBorder,
                                 ),
                               ),
                             ),
-                            SizedBox(width: 8),
+                            const SizedBox(width: 8),
                             Text(
                               '0%',
                               style: TextTypes.caption1(
@@ -88,7 +139,7 @@ class ResourcesPage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 4),
+                        const SizedBox(height: 4),
                         Text(
                           '중요 자료를 안전하게 보관하세요!',
                           style: TextTypes.caption1(
@@ -101,18 +152,18 @@ class ResourcesPage extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             SvgPicture.asset(
               'assets/icons/custom_folder_file.svg',
               width: 64,
               height: 64,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Text(
               '아직 추가된 자료가 없어요',
               style: TextTypes.title1B(color: Palette.textSecondary),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               '수업자료, 과제, 참고 자료 등을\n폴더로 만들고 파일을 업로드 해보세요!',
               textAlign: TextAlign.center,
