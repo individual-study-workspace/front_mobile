@@ -12,7 +12,7 @@ class SignUpState {
 
   const SignUpState({
     this.name = '',
-    this.email = '',
+    this.email = 'test',
     this.role,
 
     this.isAdult = false,

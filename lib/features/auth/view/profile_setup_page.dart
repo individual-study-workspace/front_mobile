@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:front_mobile/common/theme.dart';
 import 'package:front_mobile/common/widget/sub_app_bar.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../app/route_path.dart';
 import '../../../common/widget/button.dart';
 import '../../../common/widget/text_input.dart';
 import '../provider/sign_up_provider.dart';
@@ -239,7 +241,7 @@ class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> {
                   isEnabled: signUpState.isUserProfileValid,
                   onPressed: signUpState.isUserProfileValid
                       ? () {
-                          // 다음 단계
+                          context.go(RoutePath.home);
                         }
                       : null,
                 ),

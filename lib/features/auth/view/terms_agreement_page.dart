@@ -286,6 +286,7 @@ class TermsAgreementPage extends ConsumerWidget {
               ),
             ),
             Padding(
+
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: SizedBox(
                 width: double.infinity,

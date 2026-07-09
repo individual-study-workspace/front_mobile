@@ -3,13 +3,20 @@ import 'package:front_mobile/app/route_path.dart';
 import 'package:front_mobile/features/auth/view/profile_setup_page.dart';
 import 'package:front_mobile/features/auth/view/terms_agreement_page.dart';
 import 'package:front_mobile/features/chat/view/chat_room_page.dart';
+import 'package:front_mobile/features/test/view/test_page.dart';
 import 'package:go_router/go_router.dart';
+
+import '../features/chat/view/chat_list_page.dart';
+import '../features/classroom/tutor/create/view/classroom_create_page.dart';
+import '../features/home/view/home_page.dart';
+import '../features/main/view/main_page.dart';
 
 final goRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     ///일단 이렇게 진행 이후에 home으로 변경
     initialLocation: RoutePath.chatRoom,
     routes: [
+      // 인증 영역
       GoRoute(
         path: RoutePath.termsAgreement,
         builder: (_, __) => const TermsAgreementPage(),
@@ -18,10 +25,28 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         path: RoutePath.profileSetup,
         builder: (_, __) => const ProfileSetupPage(),
       ),
-      // 채팅룸 개발을 위해 기본 페이지를 채팅룸으로 임시 변경
-      GoRoute(
-        path: RoutePath.chatRoom,
-        builder: (_, __) => const ChatRoomPage(),
+
+      // 메인 영역
+      ShellRoute(
+        builder: (context, state, child) {
+          return MainPage(child: child);
+        },
+        routes: [
+          GoRoute(path: RoutePath.home, builder: (_, __) => const HomePage()),
+          GoRoute(
+            path: RoutePath.classroomCreate,
+            builder: (_, __) => const ClassroomCreatePage(),
+          ),
+          GoRoute(
+            path: RoutePath.chatList,
+            builder: (_, __) => const ChatListPage(),
+          ),
+          GoRoute(path: RoutePath.test, builder: (_, __) => const TestPage(),
+          GoRoute(
+            path: RoutePath.chatRoom,
+            builder: (_, __) => const ChatRoomPage()
+          ),
+        ],
       ),
     ],
   );
