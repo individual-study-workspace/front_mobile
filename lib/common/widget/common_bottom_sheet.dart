@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:front_mobile/common/widget/button/button.dart';
+import 'package:front_mobile/common/widget/button/button_style.dart';
 
 import '../theme.dart';
-import 'button.dart';
 
 enum BottomSheetHeaderType { close, action }
 
@@ -204,7 +205,8 @@ class CommonBottomSheet extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               height: 40,
-              child: PrimaryMediumButton(
+              child: PrimaryButton(
+                size: ButtonSize.medium,
                 content: buttonText,
                 onPressed: onButtonTap,
               ),

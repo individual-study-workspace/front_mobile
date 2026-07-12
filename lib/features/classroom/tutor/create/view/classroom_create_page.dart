@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front_mobile/common/theme.dart';
-import 'package:front_mobile/common/widget/button.dart';
+import 'package:front_mobile/common/widget/button/button.dart';
 import 'package:front_mobile/common/widget/sub_app_bar.dart';
 import 'package:front_mobile/features/classroom/tutor/create/view/confirm_step.dart';
 
@@ -125,7 +125,7 @@ class _ClassroomCreatePageState extends ConsumerState<ClassroomCreatePage> {
               width: double.infinity,
               height: 52,
 
-              child: PrimaryLargeButton(
+              child: PrimaryButton(
                 content: state.step == ClassroomCreateStep.confirm
                     ? '강의실 개설하기'
                     : '다음',

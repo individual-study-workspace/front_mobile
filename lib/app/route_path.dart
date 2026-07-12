@@ -5,5 +5,6 @@ abstract class RoutePath {
   static const classroomCreate = '/classroomCreate';
   static const chatList = '/chatList';
   static const classroomEntry = '/classroomEntry';
+  static const chatList = '/chatList';
   static const test = '/test';
 }
