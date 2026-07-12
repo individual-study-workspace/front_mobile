@@ -2,11 +2,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front_mobile/app/route_path.dart';
 import 'package:front_mobile/features/auth/view/profile_setup_page.dart';
 import 'package:front_mobile/features/auth/view/terms_agreement_page.dart';
+import 'package:front_mobile/features/chat/view/chat_list_page.dart';
 import 'package:front_mobile/features/chat/view/chat_room_page.dart';
 import 'package:front_mobile/features/test/view/test_page.dart';
 import 'package:go_router/go_router.dart';
 
-import '../features/chat/view/chat_list_page.dart';
+import '../features/classroom/tutee/entry/view/classroom_entry_page.dart';
 import '../features/classroom/tutor/create/view/classroom_create_page.dart';
 import '../features/home/view/home_page.dart';
 import '../features/main/view/main_page.dart';
@@ -14,7 +15,7 @@ import '../features/main/view/main_page.dart';
 final goRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     ///일단 이렇게 진행 이후에 home으로 변경
-    initialLocation: RoutePath.chatRoom,
+    initialLocation: RoutePath.classroomEntry,
     routes: [
       // 인증 영역
       GoRoute(
@@ -47,6 +48,10 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             builder: (_, __) => const ChatRoomPage()
           ),
         ],
+      ),
+      GoRoute(
+        path: RoutePath.classroomEntry,
+        builder: (_, __) => const ClassroomEntryPage(),
       ),
     ],
   );

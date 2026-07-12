@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
+import '../../../common/model/classroom_type.dart';
 import '../model/classroom_create_state.dart';
 
 final classroomCreateProvider =

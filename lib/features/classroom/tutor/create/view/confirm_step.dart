@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:front_mobile/common/theme.dart';
 
+import '../../../common/model/classroom_type.dart';
 import '../model/classroom_create_state.dart';
 import '../provider/classroom_create_provider.dart';
 
@@ -66,7 +67,7 @@ class ConfirmStep extends ConsumerWidget {
                       style: TextTypes.caption1(color: Palette.textTertiary),
                     ),
                     Text(
-                      classroomCreateState.lessonType!.label,
+                      classroomCreateState.lessonType!.name,
                       style: TextTypes.title3M(color: Palette.textPrimary),
                     ),
                   ],

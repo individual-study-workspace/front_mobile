@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:front_mobile/common/theme.dart';
 
 import '../../../../../common/widget/common_bottom_sheet.dart';
+import '../../../common/model/classroom_type.dart';
 import '../model/classroom_create_state.dart';
 import '../provider/classroom_create_provider.dart';
 

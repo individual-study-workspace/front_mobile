@@ -4,7 +4,7 @@ import 'package:front_mobile/common/theme.dart';
 
 import '../../../../../common/widget/test_area.dart';
 import '../../../../../common/widget/text_input.dart';
-import '../model/classroom_create_state.dart';
+import '../../../common/model/classroom_type.dart';
 import '../provider/classroom_create_provider.dart';
 
 class CreateBasicInfoStep extends ConsumerWidget {
