@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:front_mobile/common/widget/button/button.dart';
+import 'package:front_mobile/common/widget/button/button_style.dart';
 
 import '../../../../../../../common/theme.dart';
-import '../../../../../../../common/widget/button.dart';
 import '../../../../model/assignment_info_response.dart';
 import '../../../../model/class_main_state.dart';
 
@@ -90,7 +91,8 @@ class AssignmentItem extends StatelessWidget {
 
           SizedBox(
             width: double.infinity,
-            child: SecondaryMediumButton(
+            child: SecondaryButton(
+              size: ButtonSize.medium,
               content: userType == UserType.tutor ? '채점하기' : '제출하기',
               onPressed: onButtonTap,
             ),

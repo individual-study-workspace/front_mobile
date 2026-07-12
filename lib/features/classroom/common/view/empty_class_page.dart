@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:front_mobile/common/theme.dart';
-import 'package:front_mobile/common/widget/button.dart';
+import 'package:front_mobile/common/widget/button/button.dart';
 import 'package:front_mobile/common/widget/main_app_bar.dart';
 
 class EmptyClassPage extends StatelessWidget {
@@ -55,7 +55,7 @@ class EmptyClassPage extends StatelessWidget {
                     style: TextTypes.body2M(color: Palette.textTertiary),
                   ),
                   SizedBox(height: 32),
-                  PrimaryLargeButton(
+                  PrimaryButton(
                     contentBuilder: (textColor) => Row(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.center,

@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:front_mobile/common/widget/button/button.dart';
+import 'package:front_mobile/common/widget/button/button_style.dart';
 
 import '../../../../../../common/theme.dart';
-import '../../../../../../common/widget/button.dart';
 
 class ClassGuideCard extends StatelessWidget {
   final VoidCallback? onPressed;
@@ -29,7 +30,11 @@ class ClassGuideCard extends StatelessWidget {
           const SizedBox(height: 16),
           SizedBox(
             width: double.infinity,
-            child: SecondaryMediumButton(content: '등록하기', onPressed: onPressed),
+            child: SecondaryButton(
+              size: ButtonSize.medium,
+              content: '등록하기',
+              onPressed: onPressed,
+            ),
           ),
         ],
       ),

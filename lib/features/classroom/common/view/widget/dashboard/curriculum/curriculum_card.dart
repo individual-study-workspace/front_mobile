@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:front_mobile/common/widget/button/button.dart';
 
 import '../../../../../../../common/theme.dart';
-import '../../../../../../../common/widget/button.dart';
 
 class CurriculumCard extends StatelessWidget {
   final VoidCallback? onPressed;
@@ -54,7 +54,7 @@ class CurriculumCard extends StatelessWidget {
           const SizedBox(height: 16),
           SizedBox(
             width: double.infinity,
-            child: PrimaryLargeButton(content: '커리큘럼 등록', onPressed: onPressed),
+            child: PrimaryButton(content: '커리큘럼 등록', onPressed: onPressed),
           ),
         ],
       ),
