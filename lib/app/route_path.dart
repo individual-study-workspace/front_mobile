@@ -4,7 +4,7 @@ abstract class RoutePath {
   static const profileSetup = '/profileSetup';
   static const classroomCreate = '/classroomCreate';
   static const chatList = '/chatList';
+  static const chatRoom = '/chatRoom';
   static const classroomEntry = '/classroomEntry';
-  static const chatList = '/chatList';
   static const test = '/test';
 }

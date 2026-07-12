@@ -149,9 +149,9 @@ class ButtonStyleUtil {
       case ButtonSize.large:
         return ButtonSizeData(
           borderRadius: BorderRadius.circular(8),
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+          padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 24),
           builderPadding: const EdgeInsets.symmetric(
-            vertical: 13,
+            vertical: 12,
             horizontal: 24,
           ),
           textStyle: (color) => TextTypes.title3SB(color: color),

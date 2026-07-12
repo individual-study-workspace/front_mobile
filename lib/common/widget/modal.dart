@@ -2,26 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:front_mobile/common/theme.dart';
 import 'package:front_mobile/common/widget/button/button.dart';
-import 'package:front_mobile/common/widget/button/button_style.dart';
 
 class Modal extends StatelessWidget {
   final String title;
   final String? description;
   final Widget? content;
-  final String leftText;
+  final String? leftText;
   final String rightText;
   final VoidCallback? onLeft;
   final VoidCallback? onRight;
+  final bool showCloseButton;
 
   const Modal({
     super.key,
     required this.title,
     this.description,
     this.content,
-    required this.leftText,
+    this.leftText,
     required this.rightText,
     this.onLeft,
     this.onRight,
+    this.showCloseButton = true,
   });
 
   @override
@@ -35,17 +36,18 @@ class Modal extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             /// 닫기 버튼
-            Align(
-              alignment: Alignment.topRight,
-              child: GestureDetector(
-                onTap: () => Navigator.pop(context),
-                child: SvgPicture.asset(
-                  'assets/icons/close_outline.svg',
-                  width: 24,
-                  height: 24,
+            if (showCloseButton)
+              Align(
+                alignment: Alignment.topRight,
+                child: GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: SvgPicture.asset(
+                    'assets/icons/close_outline.svg',
+                    width: 24,
+                    height: 24,
+                  ),
                 ),
               ),
-            ),
 
             /// 제목
             Text(title, style: TextTypes.title1B()),
@@ -66,31 +68,33 @@ class Modal extends StatelessWidget {
             const SizedBox(height: 16),
 
             /// 버튼 영역
-            Row(
-              children: [
-                Expanded(
-                  child: SizedBox(
-                    height: 40,
-                    child: SecondaryButton(
-                      size: ButtonSize.medium,
-                      content: leftText,
-                      onPressed: onLeft,
+            if (leftText == null)
+              SizedBox(
+                width: double.infinity,
+                child: PrimaryButton(content: rightText, onPressed: onRight),
+              )
+            else
+              Row(
+                children: [
+                  Expanded(
+                    child: SizedBox(
+                      child: SecondaryButton(
+                        content: leftText!,
+                        onPressed: onLeft,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: SizedBox(
-                    height: 40,
-                    child: PrimaryButton(
-                      size: ButtonSize.medium,
-                      content: rightText,
-                      onPressed: onRight,
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: SizedBox(
+                      child: PrimaryButton(
+                        content: rightText,
+                        onPressed: onRight,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
           ],
         ),
       ),
