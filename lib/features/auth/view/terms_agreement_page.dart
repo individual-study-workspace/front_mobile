@@ -6,7 +6,7 @@ import 'package:front_mobile/common/widget/sub_app_bar.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/route_path.dart';
-import '../../../common/widget/button.dart';
+import '../../../common/widget/button/button.dart';
 import '../../../common/widget/checkbox.dart';
 import '../provider/sign_up_provider.dart';
 
@@ -286,13 +286,12 @@ class TermsAgreementPage extends ConsumerWidget {
               ),
             ),
             Padding(
-
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: SizedBox(
                 width: double.infinity,
                 height: 52,
 
-                child: PrimaryLargeButton(
+                child: PrimaryButton(
                   content: '시작하기',
                   isEnabled: signUpState.isTermsAgreed,
                   onPressed: signUpState.isTermsAgreed
