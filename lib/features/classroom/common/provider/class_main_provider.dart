@@ -23,7 +23,6 @@ class ClassMainProvider extends StateNotifier<ClassMainState> {
         ),
       );
 
-  //
   // ClassMainProvider() : super(ClassMainState());
 
   void changeTab(int index) {

@@ -17,13 +17,13 @@ class ClassMainState {
   final String? learningGoal;
 
   ClassMainState({
-    this.userType = UserType.tutor,
+    this.userType = UserType.tutee,
     this.selectedTabIndex = 0,
     this.assignments,
     this.todoList,
     this.curriculum,
-    this.classGuide = "TEST",
-    this.learningGoal = "TEST",
+    this.classGuide = 'test',
+    this.learningGoal = 'test',
   });
 
   ClassMainState copyWith({

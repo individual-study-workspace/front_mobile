@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:front_mobile/common/theme.dart';
 import 'package:front_mobile/common/widget/button/button.dart';
@@ -6,12 +7,16 @@ import 'package:front_mobile/common/widget/main_app_bar.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/route_path.dart';
+import '../model/class_main_state.dart';
+import '../provider/class_main_provider.dart';
 
-class EmptyClassPage extends StatelessWidget {
+class EmptyClassPage extends ConsumerWidget {
   const EmptyClassPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(classMainProvider);
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(56),
@@ -48,12 +53,16 @@ class EmptyClassPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    '아직 개설된 강의실이 없어요',
+                    state.userType == UserType.tutor
+                        ? '아직 개설된 강의실이 없어요'
+                        : '아직 입장한 강의실이 없어요',
                     style: TextTypes.title1B(color: Palette.textSecondary),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    '첫 강의실을 만들고 수업 관리를 시작해보세요',
+                    state.userType == UserType.tutor
+                        ? '첫 강의실을 만들고 수업 관리를 시작해보세요'
+                        : '튜터에게 받은 초대코드를 입력하고 강의실에 입장해보세요.',
                     textAlign: TextAlign.center,
                     style: TextTypes.body2M(color: Palette.textTertiary),
                   ),
@@ -64,7 +73,9 @@ class EmptyClassPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SvgPicture.asset(
-                          'assets/icons/plus_outline.svg',
+                          state.userType == UserType.tutor
+                              ? 'assets/icons/plus_outline.svg'
+                              : 'assets/icons/pencil_outline.svg',
                           width: 24,
                           height: 24,
                           colorFilter: ColorFilter.mode(
@@ -74,13 +85,17 @@ class EmptyClassPage extends StatelessWidget {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          '새 강의실 개설하기',
+                          state.userType == UserType.tutor
+                              ? '새 강의실 개설하기'
+                              : '초대코드 입력하기',
                           style: TextTypes.title3SB(color: textColor),
                         ),
                       ],
                     ),
                     onPressed: () {
-                      context.push(RoutePath.classroomCreate);
+                      state.userType == UserType.tutor
+                          ? context.push(RoutePath.classroomCreate)
+                          : context.push(RoutePath.classroomEntry);
                     },
                   ),
                 ],

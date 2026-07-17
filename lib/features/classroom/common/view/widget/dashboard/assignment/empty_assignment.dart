@@ -34,7 +34,9 @@ class EmptyAssignment extends StatelessWidget {
               ),
               child: Center(
                 child: SvgPicture.asset(
-                  'assets/icons/checks_outline.svg',
+                  userType == UserType.tutor
+                      ? 'assets/icons/checks_outline.svg'
+                      : 'assets/icons/book_outline.svg',
                   width: 24,
                   height: 24,
                   fit: BoxFit.contain,
@@ -45,11 +47,11 @@ class EmptyAssignment extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 8),
             Text(
               userType == UserType.tutor
                   ? '현재 채점 대기 중인 과제가 없습니다.'
-                  : '현재 제출해야 할 과제가 없습니다.',
+                  : '현재 진행 중인 과제가 없습니다.',
               style: TextTypes.body2R(color: Palette.textTertiary),
             ),
             const SizedBox(height: 12),

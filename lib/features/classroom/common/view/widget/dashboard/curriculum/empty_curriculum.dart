@@ -38,25 +38,29 @@ class EmptyCurriculum extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         Text(
-          '커리큘럼을 등록해주세요',
+          userType == UserType.tutor ? '커리큘럼을 등록해주세요' : '튜터가 커리큘럼을 준비하고 있어요',
           style: TextTypes.title3SB(color: Palette.textPrimary),
         ),
         const SizedBox(height: 4),
         Text(
-          '첫 수업 일정을 등록하고 학생과 공유해보세요.',
+          userType == UserType.tutor
+              ? '첫 수업 일정을 등록하고 학생과 공유해보세요.'
+              : '커리큘럼이 등록되면 수업 안내를 받을 수 있어요.',
           textAlign: TextAlign.center,
           style: TextTypes.body2R(color: Palette.textTertiary),
         ),
-        const SizedBox(height: 16),
-        SizedBox(
-          width: double.infinity,
-          child: PrimaryButton(
-            content: '커리큘럼 등록',
-            onPressed: () {
-              context.push(RoutePath.classroomCreate);
-            },
+        if (userType == UserType.tutor) ...[
+          const SizedBox(height: 16),
+          SizedBox(
+            width: double.infinity,
+            child: PrimaryButton(
+              content: '커리큘럼 등록',
+              onPressed: () {
+                context.push(RoutePath.classroomCreate);
+              },
+            ),
           ),
-        ),
+        ],
       ],
     );
   }

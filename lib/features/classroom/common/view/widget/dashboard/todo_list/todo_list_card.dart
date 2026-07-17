@@ -53,10 +53,11 @@ class TodoListCard extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 4),
-          Text(
-            '마감 임박순으로 최대 2개 표시됩니다.',
-            style: TextTypes.caption1(color: Palette.textSecondary),
-          ),
+          if (todoListData.isNotEmpty)
+            Text(
+              '마감 임박순으로 최대 2개 표시됩니다.',
+              style: TextTypes.caption1(color: Palette.textSecondary),
+            ),
           const SizedBox(height: 12),
           if (todoListData.isEmpty)
             EmptyTodoList(userType: userType)

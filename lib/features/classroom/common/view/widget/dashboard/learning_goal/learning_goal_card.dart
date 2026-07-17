@@ -108,7 +108,9 @@ class _LearningGoalCardState extends ConsumerState<LearningGoalCard> {
           const SizedBox(height: 8),
           if (widget.learningGoal == null) ...[
             Text(
-              '학생이 아직 목표를 설정하지 않았어요.',
+              widget.userType == UserType.tutor
+                  ? '학생이 아직 목표를 설정하지 않았어요.'
+                  : '이 수업을 통해 달성하고 싶은 목표나 의지를 자유롭게 적어주세요.',
               style: TextTypes.body2R(color: Palette.textTertiary),
             ),
             if (widget.userType == UserType.tutee) ...[
@@ -116,6 +118,7 @@ class _LearningGoalCardState extends ConsumerState<LearningGoalCard> {
               SizedBox(
                 width: double.infinity,
                 child: SecondaryButton(
+                  variant: ButtonVariant.neutral,
                   size: ButtonSize.medium,
                   content: '등록하기',
                   onPressed: () {

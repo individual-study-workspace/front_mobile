@@ -98,7 +98,9 @@ class _ClassGuideCardState extends ConsumerState<ClassGuideCard> {
           const SizedBox(height: 8),
           if (widget.classGuide == null) ...[
             Text(
-              '교재 지참, 지각 규칙 등 학생에게 꼭 알려야 할 내용을 적어주세요.',
+              widget.userType == UserType.tutor
+                  ? '교재 지참, 지각 규칙 등 학생에게 꼭 알려야 할 내용을 적어주세요.'
+                  : '교재 지참, 지각 규칙 등 학생에게 꼭 알려야 할 내용을 준비 중이에요.',
               style: TextTypes.body2R(color: Palette.textTertiary),
             ),
             if (widget.userType == UserType.tutor) ...[

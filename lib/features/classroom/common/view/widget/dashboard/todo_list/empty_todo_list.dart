@@ -45,7 +45,7 @@ class EmptyTodoList extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 8),
             Text(
               '현재 등록된 할 일이 없습니다.',
               style: TextTypes.body2R(color: Palette.textTertiary),
