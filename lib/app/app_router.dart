@@ -7,7 +7,7 @@ import 'package:front_mobile/features/chat/view/chat_room_page.dart';
 import 'package:front_mobile/features/test/view/test_page.dart';
 import 'package:go_router/go_router.dart';
 
-import '../features/classroom/tutee/entry/view/classroom_entry_page.dart';
+import '../features/classroom/common/view/class_base_page.dart';
 import '../features/classroom/tutor/create/view/classroom_create_page.dart';
 import '../features/home/view/home_page.dart';
 import '../features/main/view/main_page.dart';
@@ -15,7 +15,7 @@ import '../features/main/view/main_page.dart';
 final goRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     ///일단 이렇게 진행 이후에 home으로 변경
-    initialLocation: RoutePath.classroomEntry,
+    initialLocation: RoutePath.classroom,
     routes: [
       // 인증 영역
       GoRoute(
@@ -26,7 +26,6 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         path: RoutePath.profileSetup,
         builder: (_, __) => const ProfileSetupPage(),
       ),
-
       // 메인 영역
       ShellRoute(
         builder: (context, state, child) {
@@ -35,8 +34,8 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         routes: [
           GoRoute(path: RoutePath.home, builder: (_, __) => const HomePage()),
           GoRoute(
-            path: RoutePath.classroomCreate,
-            builder: (_, __) => const ClassroomCreatePage(),
+            path: RoutePath.classroom,
+            builder: (_, __) => const ClassBasePage(),
           ),
           GoRoute(
             path: RoutePath.chatList,
@@ -46,12 +45,12 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         ],
       ),
       GoRoute(
-        path: RoutePath.classroomEntry,
-        builder: (_, __) => const ClassroomEntryPage(),
-      ),
-      GoRoute(
         path: RoutePath.chatRoom,
         builder: (_, __) => const ChatRoomPage(),
+      ),
+      GoRoute(
+        path: RoutePath.classroomCreate,
+        builder: (_, __) => const ClassroomCreatePage(),
       ),
     ],
   );

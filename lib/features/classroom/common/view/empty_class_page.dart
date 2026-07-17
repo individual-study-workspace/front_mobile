@@ -3,6 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:front_mobile/common/theme.dart';
 import 'package:front_mobile/common/widget/button/button.dart';
 import 'package:front_mobile/common/widget/main_app_bar.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../../app/route_path.dart';
 
 class EmptyClassPage extends StatelessWidget {
   const EmptyClassPage({super.key});
@@ -76,6 +79,9 @@ class EmptyClassPage extends StatelessWidget {
                         ),
                       ],
                     ),
+                    onPressed: () {
+                      context.push(RoutePath.classroomCreate);
+                    },
                   ),
                 ],
               ),

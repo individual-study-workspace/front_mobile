@@ -1,11 +1,13 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:front_mobile/common/widget/button/button.dart';
 import 'package:front_mobile/common/widget/button/button_style.dart';
+import 'package:front_mobile/common/widget/common_badge.dart';
 
 import '../../../../../../../common/theme.dart';
 import '../../../../model/assignment_info_response.dart';
 import '../../../../model/class_main_state.dart';
+import '../../../../model/classroom_type.dart';
 
 class AssignmentItem extends StatelessWidget {
   final UserType userType;
@@ -34,16 +36,20 @@ class AssignmentItem extends StatelessWidget {
           /// 회차 + D-Day
           Row(
             children: [
-              Text(
-                '[${assignment.currentSession}]',
-                style: TextTypes.caption1(color: Palette.primary),
+              CommonBadge(
+                text: assignment.currentSession,
+                textStyle: TextTypes.caption2(color: Palette.blue500),
+                backgroundColor: Palette.blue50,
               ),
-              const SizedBox(width: 8),
-              Text('D-DAY', style: TextTypes.caption1(color: Palette.red500)),
+              const SizedBox(width: 6),
+              CommonBadge(
+                text: getDueDateText(assignment.dueDate.toString()),
+                textStyle: TextTypes.caption2(color: Palette.red500),
+                backgroundColor: Palette.red50,
+              ),
             ],
           ),
-
-          const SizedBox(height: 8),
+          const SizedBox(height: 4),
 
           /// 과제명
           Text(
@@ -58,13 +64,17 @@ class AssignmentItem extends StatelessWidget {
             children: [
               SvgPicture.asset(
                 'assets/icons/time_outline.svg',
-                width: 16,
-                height: 16,
+                width: 12,
+                height: 12,
+                colorFilter: ColorFilter.mode(
+                  Palette.iconTertiary,
+                  BlendMode.srcIn,
+                ),
               ),
               const SizedBox(width: 4),
               Text(
-                '마감일: ${assignment.dueDate}',
-                style: TextTypes.body2R(color: Palette.textSecondary),
+                '마감일:${formatDate(assignment.dueDate)} ${formatTime(TimeOfDay.fromDateTime(assignment.dueDate))}',
+                style: TextTypes.caption1(color: Palette.textTertiary),
               ),
             ],
           ),
@@ -75,23 +85,28 @@ class AssignmentItem extends StatelessWidget {
             Row(
               children: [
                 SvgPicture.asset(
-                  'assets/icons/checks_outline.svg',
-                  width: 16,
-                  height: 16,
+                  'assets/icons/clipboard_outline.svg',
+                  width: 12,
+                  height: 12,
+                  colorFilter: ColorFilter.mode(
+                    Palette.iconTertiary,
+                    BlendMode.srcIn,
+                  ),
                 ),
                 const SizedBox(width: 4),
                 Text(
                   '제출 현황: ${assignment.submittedCount} / ${assignment.totalCount}',
-                  style: TextTypes.body2R(color: Palette.textSecondary),
+                  style: TextTypes.caption1(color: Palette.textTertiary),
                 ),
               ],
             ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
 
           SizedBox(
             width: double.infinity,
-            child: SecondaryButton(
+            child: PrimaryButton(
+              variant: ButtonVariant.neutral,
               size: ButtonSize.medium,
               content: userType == UserType.tutor ? '채점하기' : '제출하기',
               onPressed: onButtonTap,

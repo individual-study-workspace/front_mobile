@@ -1,36 +1,38 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:front_mobile/common/widget/button/button_style.dart';
+import 'package:front_mobile/features/classroom/common/model/todo_list_item.dart';
+import 'package:front_mobile/features/classroom/common/view/widget/dashboard/todo_list/empty_todo_list.dart';
+import 'package:front_mobile/features/classroom/common/view/widget/dashboard/todo_list/todo_list_item.dart';
 
 import '../../../../../../../common/theme.dart';
 import '../../../../../../../common/widget/button/button.dart';
-import '../../../../../../../common/widget/button/button_style.dart';
-import '../../../../model/assignment_info_response.dart';
 import '../../../../model/class_main_state.dart';
-import 'assignment_item.dart';
-import 'empty_assignment.dart';
+import '../../../../provider/class_main_provider.dart';
 
-class AssignmentCard extends StatelessWidget {
+class TodoListCard extends ConsumerWidget {
   final UserType userType;
-  final List<AssignmentInfoResponse>? assignments;
+  final List<TodoListItemModel>? todoList;
   final VoidCallback? onMoreTap;
 
-  const AssignmentCard({
+  const TodoListCard({
     super.key,
-    required this.userType,
-    this.assignments,
     this.onMoreTap,
+    required this.userType,
+    this.todoList,
   });
 
   @override
-  Widget build(BuildContext context) {
-    final assignmentList = assignments ?? [];
+  Widget build(BuildContext context, WidgetRef ref) {
+    final todoListData = todoList ?? [];
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
         color: Palette.bgSurface,
+        borderRadius: BorderRadius.circular(12),
       ),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -39,12 +41,12 @@ class AssignmentCard extends StatelessWidget {
             TextSpan(
               children: [
                 TextSpan(
-                  text: userType == UserType.tutor ? '미채점 과제' : '미제출 과제',
+                  text: '투두리스트',
                   style: TextTypes.title4M(color: Palette.textPrimary),
                 ),
                 const WidgetSpan(child: SizedBox(width: 8)),
                 TextSpan(
-                  text: '${assignments?.length ?? 0}',
+                  text: todoListData.length.toString(),
                   style: TextTypes.title4M(color: Palette.primaryVariant),
                 ),
               ],
@@ -56,20 +58,23 @@ class AssignmentCard extends StatelessWidget {
             style: TextTypes.caption1(color: Palette.textSecondary),
           ),
           const SizedBox(height: 12),
-
-          if (assignmentList.isEmpty)
-            EmptyAssignment(userType: userType)
+          if (todoListData.isEmpty)
+            EmptyTodoList(userType: userType)
           else ...[
             Column(
               children: List.generate(
                 2,
                 (index) => Padding(
                   padding: EdgeInsets.only(
-                    bottom: index == assignmentList.length - 1 ? 0 : 8,
+                    bottom: index == todoListData.length - 1 ? 0 : 8,
                   ),
-                  child: AssignmentItem(
-                    userType: userType,
-                    assignment: assignmentList[index], // 하나씩 전달
+                  child: TodoListItem(
+                    todo: todoListData[index],
+                    onCheckTap: () {
+                      ref
+                          .read(classMainProvider.notifier)
+                          .setTodoChecked(index);
+                    },
                   ),
                 ),
               ),
@@ -83,7 +88,7 @@ class AssignmentCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      '과제함에서 전체 확인',
+                      '할 일 전체 보기',
                       style: TextTypes.title4M(color: textColor),
                     ),
                     const SizedBox(width: 2),

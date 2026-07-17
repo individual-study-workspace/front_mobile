@@ -1,16 +1,16 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:front_mobile/common/widget/button/button.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:front_mobile/common/widget/button/button_style.dart';
 
 import '../../../../../../../common/theme.dart';
-import '../../../../../../../common/widget/button/button_style.dart';
+import '../../../../../../../common/widget/button/button.dart';
 import '../../../../model/class_main_state.dart';
 
-class EmptyAssignment extends StatelessWidget {
+class EmptyTodoList extends StatelessWidget {
   final UserType userType;
 
-  const EmptyAssignment({super.key, required this.userType});
+  const EmptyTodoList({super.key, required this.userType});
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +47,7 @@ class EmptyAssignment extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              userType == UserType.tutor
-                  ? '현재 채점 대기 중인 과제가 없습니다.'
-                  : '현재 제출해야 할 과제가 없습니다.',
+              '현재 등록된 할 일이 없습니다.',
               style: TextTypes.body2R(color: Palette.textTertiary),
             ),
             const SizedBox(height: 12),
@@ -61,7 +59,7 @@ class EmptyAssignment extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      '과제함으로 이동',
+                      '투두리스트로 이동',
                       style: TextTypes.title4M(color: textColor),
                     ),
                     const SizedBox(width: 2),

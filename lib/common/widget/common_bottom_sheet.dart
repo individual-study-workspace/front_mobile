@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:front_mobile/common/widget/button/button.dart';
-import 'package:front_mobile/common/widget/button/button_style.dart';
 
 import '../theme.dart';
 
@@ -10,8 +8,8 @@ enum BottomSheetHeaderType { close, action }
 class CommonBottomSheet extends StatelessWidget {
   final String title;
   final Widget content;
-  final String buttonText;
-  final VoidCallback onButtonTap;
+  final String? buttonText;
+  final VoidCallback? onButtonTap;
 
   final BottomSheetHeaderType headerType;
 
@@ -37,13 +35,13 @@ class CommonBottomSheet extends StatelessWidget {
     super.key,
     required this.title,
     required this.content,
-    required this.buttonText,
-    required this.onButtonTap,
     this.leftActionText = '취소',
     this.rightActionText = '저장',
     this.onLeftActionTap,
     this.onRightActionTap,
-  }) : headerType = BottomSheetHeaderType.action;
+  }) : headerType = BottomSheetHeaderType.action,
+       buttonText = null,
+       onButtonTap = null;
 
   static Future<T?> showClose<T>(
     BuildContext context, {
@@ -72,8 +70,6 @@ class CommonBottomSheet extends StatelessWidget {
     BuildContext context, {
     required String title,
     required Widget content,
-    required String buttonText,
-    required VoidCallback onButtonTap,
     String leftActionText = '취소',
     String rightActionText = '저장',
     VoidCallback? onLeftActionTap,
@@ -88,8 +84,6 @@ class CommonBottomSheet extends StatelessWidget {
         return CommonBottomSheet.action(
           title: title,
           content: content,
-          buttonText: buttonText,
-          onButtonTap: onButtonTap,
           leftActionText: leftActionText,
           rightActionText: rightActionText,
           onLeftActionTap: onLeftActionTap,
@@ -198,19 +192,6 @@ class CommonBottomSheet extends StatelessWidget {
 
             /// Content
             content,
-
-            const SizedBox(height: 20),
-
-            /// Bottom Button
-            SizedBox(
-              width: double.infinity,
-              height: 40,
-              child: PrimaryButton(
-                size: ButtonSize.medium,
-                content: buttonText,
-                onPressed: onButtonTap,
-              ),
-            ),
           ],
         ),
       ),

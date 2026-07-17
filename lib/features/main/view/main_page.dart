@@ -22,7 +22,7 @@ class MainPage extends StatelessWidget {
               context.go(RoutePath.home);
               break;
             case 1:
-              context.go(RoutePath.classroomCreate);
+              context.go(RoutePath.classroom);
               break;
             case 2:
               context.go(RoutePath.chatList);
@@ -45,7 +45,7 @@ int _getCurrentIndex(BuildContext context) {
 
   ///home 제외하고 나중에 수정 필요
   if (location.startsWith(RoutePath.home)) return 0;
-  if (location.startsWith(RoutePath.classroomCreate)) return 1;
+  if (location.startsWith(RoutePath.classroom)) return 1;
   if (location.startsWith(RoutePath.chatList)) return 2;
   if (location.startsWith(RoutePath.test)) return 3;
   if (location.startsWith(RoutePath.test)) return 4;

@@ -5,7 +5,7 @@ import 'package:front_mobile/common/widget/main_app_bar.dart';
 import 'package:front_mobile/common/widget/tab_menu.dart';
 
 import '../provider/class_main_provider.dart';
-import 'dashboard_body.dart';
+import 'widget/dashboard/dashboard_body.dart';
 
 class ClassMainPage extends ConsumerStatefulWidget {
   const ClassMainPage({super.key});
@@ -64,6 +64,10 @@ class _ClassMainPage extends ConsumerState<ClassMainPage> {
                   DashboardBody(
                     userType: state.userType,
                     assignments: state.assignments,
+                    curriculum: state.curriculum,
+                    todoList: state.todoList,
+                    classGuide: state.classGuide,
+                    learningGoal: state.learningGoal,
                   ),
                   SizedBox.shrink(),
                   SizedBox.shrink(),

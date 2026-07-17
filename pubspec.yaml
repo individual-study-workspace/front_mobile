@@ -82,6 +82,8 @@ flutter:
     - assets/icons/checks_outline.svg
     - assets/icons/class_filled.svg
     - assets/icons/class_outline.svg
+    - assets/icons/clipboard_filled.svg
+    - assets/icons/clipboard_outline.svg
     - assets/icons/close_outline.svg
     - assets/icons/copy_filled.svg
     - assets/icons/copy_outline.svg
