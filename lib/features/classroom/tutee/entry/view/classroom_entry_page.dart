@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:front_mobile/common/widget/button.dart';
+import 'package:front_mobile/common/widget/button/button.dart';
 import 'package:front_mobile/common/widget/sub_app_bar.dart';
 
 import '../../../../../common/theme.dart';
@@ -239,7 +239,7 @@ class _ClassroomEntryPageState extends ConsumerState<ClassroomEntryPage> {
               width: double.infinity,
               height: 52,
 
-              child: PrimaryLargeButton(
+              child: PrimaryButton(
                 content: state.step == ClassroomEntryStep.codeInput
                     ? '확인하기'
                     : '승인 신청하기',
@@ -255,31 +255,18 @@ class _ClassroomEntryPageState extends ConsumerState<ClassroomEntryPage> {
                               );
                         } else {
                           ///승인 신청하고 완료되면 모달
-
                           showDialog(
                             context: context,
                             builder: (_) {
                               return Modal(
-                                title: '입장신청이 완료되었습니다.',
-                                description: '현재 계정에서 로그아웃됩니다.',
-                                leftText: '취소',
-                                rightText: '로그아웃',
-                                onLeft: () {
-                                  Navigator.pop(context);
-                                },
+                                showCloseButton: false,
+                                title: '입장 신청이 완료되었습니다',
+                                description:
+                                    '튜터의 승인 후 강의실 입장이 가능합니다.\n잠시만 기다려 주세요!',
+                                rightText: '확인',
                                 onRight: () {
                                   Navigator.pop(context);
-
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(content: Text('로그아웃 완료')),
-                                  );
                                 },
-
-                                /// 필요하면 content 추가
-                                content: const Text(
-                                  '추가 컨텐츠 영역',
-                                  textAlign: TextAlign.center,
-                                ),
                               );
                             },
                           );
