@@ -128,8 +128,8 @@ class ButtonStyleUtil {
         return ButtonStyleData(
           backgroundColor: Colors.transparent,
           textColor: isEnabled
-              ? Palette.textPrimary
-              : Palette.textPrimary.withValues(alpha: 0.3),
+              ? Palette.textSecondary
+              : Palette.textSecondary.withValues(alpha: 0.3),
           pressedColor: Palette.bgBase,
         );
 

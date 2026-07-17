@@ -37,6 +37,7 @@ class PrimaryButton extends StatelessWidget {
             shape: RoundedRectangleBorder(borderRadius: sizeData.borderRadius),
             overlayColor: Colors.transparent,
             animationDuration: Duration.zero,
+            padding: EdgeInsets.zero,
           ).copyWith(
             shadowColor: WidgetStatePropertyAll(Colors.transparent),
             surfaceTintColor: WidgetStatePropertyAll(Colors.transparent),
@@ -95,6 +96,7 @@ class SecondaryButton extends StatelessWidget {
             shape: RoundedRectangleBorder(borderRadius: sizeData.borderRadius),
             overlayColor: Colors.transparent,
             animationDuration: Duration.zero,
+            padding: EdgeInsets.zero,
           ).copyWith(
             shadowColor: WidgetStatePropertyAll(Colors.transparent),
             surfaceTintColor: WidgetStatePropertyAll(Colors.transparent),
@@ -160,6 +162,7 @@ class TertiaryButton extends StatelessWidget {
             shape: RoundedRectangleBorder(borderRadius: sizeData.borderRadius),
             overlayColor: Colors.transparent,
             animationDuration: Duration.zero,
+            padding: EdgeInsets.zero,
           ).copyWith(
             shadowColor: WidgetStatePropertyAll(Colors.transparent),
             surfaceTintColor: WidgetStatePropertyAll(Colors.transparent),
