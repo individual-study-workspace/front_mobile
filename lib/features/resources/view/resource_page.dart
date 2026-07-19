@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:front_mobile/app/route_path.dart';
 import 'package:front_mobile/common/theme.dart';
 import 'package:front_mobile/common/widget/main_app_bar.dart';
 import 'package:front_mobile/features/resources/provider/resource_provider.dart';
 import 'package:front_mobile/features/resources/view/widget/resource_upload_menu_popup.dart';
+import 'package:go_router/go_router.dart';
 
-class ResourcesPage extends ConsumerWidget {
-  const ResourcesPage({super.key});
+class ResourcePage extends ConsumerWidget {
+  const ResourcePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,8 +34,7 @@ class ResourcesPage extends ConsumerWidget {
               },
               onUploadFile: () {
                 provider.closeFab();
-
-                // TODO: 파일 업로드
+                context.go(RoutePath.resourceUpload);
               },
             ),
             SizedBox(height: 12),
